@@ -87,7 +87,6 @@ function Grid() {
 						/>
 				)}
 			</DynamicGrid>}
-		  {itemToCompare && <div>{itemToCompare.id}</div>}
 		</>
 	);
 }
