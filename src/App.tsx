@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Modal from "./components/ui/modals/Modal";
+import "./style/index.css";
 
+import { EAction } from "./components/ui/modals/type";
+import StartPage from "./components/container/StartPage";
+import ScoreTop from "./components/molecules/ScoreTop";
+import { Routes, Route } from "react-router-dom";
+import GamePage from "./components/container/GamePage";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [openModal, setOpenModal] = useState({
+		isActive: false,
+		action: EAction.SUCCESS,
+	});
+	const handleOpenModal = (bool: boolean, action: EAction) => {
+		setOpenModal({ isActive: bool, action: action });
+	};
+
+	return (
+		<>
+			<div className="App">
+				{openModal.isActive && (
+					<Modal
+						isOpen={openModal.isActive}
+						handleIsOpen={handleOpenModal}
+						action={openModal.action}
+					/>
+				)}
+				<ScoreTop />
+				<Routes>
+					<Route path="/" element={<StartPage handleOpenModal={handleOpenModal} />} />
+                    <Route path="/game" element={<GamePage />} />
+                      
+				
+				</Routes>
+				<div className="brickBottom" />
+			</div>
+		</>
+	);
 }
 
 export default App;
+
+{
+	/* <Route
+  path="/projects/:projectId/delete"
+  action={({ params }) => {
+    return fakeDeleteProject(params.projectId);
+  }}
+/> */
+}
