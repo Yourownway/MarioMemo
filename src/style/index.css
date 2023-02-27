@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "OleoScript-Bold";   /*Can be any text*/
+    src: local("OleoScript-Bold"),
+      url("./fonts/OleoScript-Bold.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "OleoScript";   /*Can be any text*/
+    src: local("OleoScript-Regular"),
+      url("./fonts/OleoScript-Regular.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "VT323";   /*Can be any text*/
+    src: local("VT323"),
+      url("./fonts/VT323-Regular.ttf") format("truetype");
+  }
+
+:root{
+    --main-scoreTop-size: 48px;
+    --main-brickBottom-size: 75px;
+}
+
+    
+    @import url(./global//reset.css);
+    @import url(./global/app.css);
+    
