@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./components/ui/modals/Modal";
 import "./style/index.css";
-
 import { EAction } from "./components/ui/modals/type";
 import StartPage from "./components/container/StartPage";
 import ScoreTop from "./components/molecules/ScoreTop";
@@ -40,12 +39,3 @@ function App() {
 }
 
 export default App;
-
-{
-	/* <Route
-  path="/projects/:projectId/delete"
-  action={({ params }) => {
-    return fakeDeleteProject(params.projectId);
-  }}
-/> */
-}
