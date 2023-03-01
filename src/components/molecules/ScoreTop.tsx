@@ -1,13 +1,19 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
+import { userState } from "../../store/slice/userSlice";
 const ScoreTop: React.FC = () => {
+	const user = useSelector(userState);
 	return (
 		<div className="scoreTop_container">
-			<p>SANDRINE</p>
-			<div>
-				<p>BEST: LVL 3</p>
-				<p>TIME: 02:33</p>
-			</div>
+			<p>{user.name}</p>
+			{user.best.isExists ? (
+				<div>
+					<p>BEST: {user.best.level}</p>
+					<p>TIME: {user.best.time}</p>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</div>
 	);
 };

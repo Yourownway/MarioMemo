@@ -11,7 +11,6 @@ export function loadState() {
 
 export async function saveState(state: any) {
   try {
-    console.log("tatata")
     const serializedState = JSON.stringify(state);
     localStorage.setItem(KEY, serializedState);
   } catch (e) {

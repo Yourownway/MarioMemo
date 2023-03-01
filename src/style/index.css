@@ -13,7 +13,11 @@
     src: local("VT323"),
       url("./fonts/VT323-Regular.ttf") format("truetype");
   }
-
+  @font-face {
+    font-family: "SuperMario";   /*Can be any text*/
+    src: local("SuperMario"),
+      url("./fonts/SuperMario256.ttf") format("truetype");
+  }
 :root{
     --main-scoreTop-size: 48px;
     --main-brickBottom-size: 75px;

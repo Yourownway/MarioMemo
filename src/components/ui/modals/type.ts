@@ -7,6 +7,8 @@ export interface IModalProps {
 export enum EAction {
 SUCCESS = "success",
 EXIT = "exit",
-USERNAME = "userName"
+USERNAME = "userName",
+COUNTDOWN = "countDown",
+WIN = "win"
 
 }

@@ -62,7 +62,6 @@ let timer = undefined;
 function Timebar() {
 	const [percent, setPercent] = useState(100);
     const [start,setStart] = useState(true)
-	console.log("🚀 ~ file: Timebar.tsx:41 ~ Timebar ~ percent:", percent)
     const initTime = 600
 	const [time, setTime] = useState(initTime);
  
@@ -83,12 +82,11 @@ function Timebar() {
             clearInterval(timer);
         }
       }, [time]);
-    console.log(time/600*100)
 	return (
-		<Container>
-			<Background />
+		<Container >
+			<Background className="animate__bounceIn animate__animated"/>
 			{/* @ts- ignore */}
-			<Progress {...{ time: time/600*100 }} />
+			<Progress className="animate__bounceIn animate__animated" {...{ time: time/600*100 }} />
 		</Container>
 	);
 }

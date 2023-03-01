@@ -1,41 +1,51 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: TSliceState = {
-    name: "test",
-    best: { isExsiste: false, time: 0, level: 0 }
+    name: "",
+    best: { isExists: false, time: 0, level: 0 }
 }
 type TSliceState = {
-    name : string,
+    name: string,
     best: Best
-  }
+}
+
+interface TUpdateNameAction {
+    payload: { name: string }
+    type: string
+}
+
+interface TUpdateScoreAction {
+    payload: { best: Best }
+    type: string
+}
+
+
 type Best = {
-    isExsiste: boolean, time: number, level :number
-}  
-const update: CaseReducer<TSliceState, PayloadAction<TSliceState>> = (state, action) => {
-    const { best, name } = action.payload
-    switch (action.type) {
-        case "name":
-            state.name = name
-            break;
-        case "bestScore":
-            state.best = { isExsiste: true, time: best.time, level: best.level }
-            break
-        default:
-            break;
-    }
+    isExists: boolean, time: number, level: number
+}
+const setName: CaseReducer<TSliceState, TUpdateNameAction> = (state, action: TUpdateNameAction) => {
+    const { name } = action.payload
+    state.name = name
+
+}
+
+const setScore: CaseReducer<TSliceState, TUpdateScoreAction> = (state, action: TUpdateScoreAction) => {
+    const { best } = action.payload
+    state.best = { isExists: true, time: best.time || 0, level: best.level || 0 }
+
 }
 const userSlice = createSlice({
     name: 'user',
-    initialState ,
+    initialState,
     reducers: {
-        updateUser : update,
+        updateUserName: setName,
+        updateUserScore: setScore
     },
 })
 
 
+export const { updateUserName,
+    updateUserScore } = userSlice.actions;
 
-
-export const { updateUser } = userSlice.actions;
-
-export const userState = (state:{user: TSliceState}) => state.user;
+export const userState = (state: { user: TSliceState }) => state.user;
 
 export default userSlice.reducer;

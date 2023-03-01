@@ -28,7 +28,7 @@ function App() {
 				<ScoreTop />
 				<Routes>
 					<Route path="/" element={<StartPage handleOpenModal={handleOpenModal} />} />
-                    <Route path="/game" element={<GamePage />} />
+                    <Route path="/game" element={<GamePage handleOpenModal={handleOpenModal} />} />
                       
 				
 				</Routes>
