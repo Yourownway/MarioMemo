@@ -6,31 +6,23 @@ import StartPage from "./components/container/StartPage";
 import ScoreTop from "./components/molecules/ScoreTop";
 import { Routes, Route } from "react-router-dom";
 import GamePage from "./components/container/GamePage";
+
+import { useSelector } from "react-redux";
+import { uiState as uiSlice, handleOpenModal } from "./store/slice/uiSlice";
+import { useDispatch } from "react-redux";
+
 function App() {
-	const [openModal, setOpenModal] = useState({
-		isActive: false,
-		action: EAction.SUCCESS,
-	});
-	const handleOpenModal = (bool: boolean, action: EAction) => {
-		setOpenModal({ isActive: bool, action: action });
-	};
+	const dispatch = useDispatch();
+	const { modalState } = useSelector(uiSlice);
 
 	return (
 		<>
 			<div className="App">
-				{openModal.isActive && (
-					<Modal
-						isOpen={openModal.isActive}
-						handleIsOpen={handleOpenModal}
-						action={openModal.action}
-					/>
-				)}
+				{modalState.isActive && <Modal />}
 				<ScoreTop />
 				<Routes>
-					<Route path="/" element={<StartPage handleOpenModal={handleOpenModal} />} />
-                    <Route path="/game" element={<GamePage handleOpenModal={handleOpenModal} />} />
-                      
-				
+					<Route path="/" element={<StartPage />} />
+					<Route path="/game" element={<GamePage />} />
 				</Routes>
 				<div className="brickBottom" />
 			</div>

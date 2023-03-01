@@ -1,33 +1,38 @@
+import { EAction } from './../../components/ui/modals/type';
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-const initialState: TUiSlice = {
-    modalIsOpen : false
+const initialState: IUiStateSlice = {
+    modalState :{ isActive: false, modalAction:EAction.INIT}
 }
-type TUiSlice = {
-    modalIsOpen : any
+interface IUiStateSlice {
+    modalState : TModal
 }
 
+type TModal = {
+    isActive: boolean,
+    modalAction: EAction
+}
 
-interface THandleModal {
-    payload: { bool: boolean }
+interface TSetModalIsOpen {
+    payload: TModal
     type: string
 }
 
-const setModal: CaseReducer<TUiSlice, THandleModal> = (state, action: THandleModal) => {
-    const {bool} = action.payload
-    state.modalIsOpen = bool
+const setModalIsOpen: CaseReducer<IUiStateSlice, TSetModalIsOpen> = (state, action: TSetModalIsOpen) => {
+    const {isActive, modalAction} = action.payload
+    state.modalState = { isActive,modalAction }
 
 }
 const uiSlice = createSlice({
     name: 'ui',
     initialState,
     reducers: {
-        handleOpenModal: setModal,
+        handleOpenModal: setModalIsOpen,
     },
 })
 
 
 export const { handleOpenModal } = uiSlice.actions;
 
-export const uiState = (state: { ui: TUiSlice }) => state.ui;
+export const uiState = (state: { ui: IUiStateSlice }) => state.ui;
 
 export default uiSlice.reducer;

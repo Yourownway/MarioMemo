@@ -33,7 +33,7 @@ const Content = styled.div<IModalProps>`
     opacity: 1;
     height: 550px;
     margin: 21px 30px;
-    background: ${(p: IModalProps) => p.action === "success" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
+    background: ${(p: IModalProps) => p.modalAction === "success" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
     display: flex;
     justify-content:center;
     align-items:center;

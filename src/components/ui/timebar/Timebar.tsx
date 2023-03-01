@@ -10,10 +10,11 @@ const Container = styled.div`
 	width: 60%;
 	min-width: 600px;
 	position: absolute;
-	bottom: 25px;
+	bottom: 18px;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0);
+    z-index: 1;
 `;
 const BaseBox = styled.div`
 	border-radius: 12px;
@@ -33,6 +34,7 @@ const Background = styled(BaseBox)`
 const Progress = styled(BaseBox)<IProgress>`
 	/* background: repeating-linear-gradient(45deg,blue,white 12px); */
 	background-color: rgb(10, 186, 250);
+    background-color:  ${({ time }) => time > 10 ?'rgb(10, 186, 250)' : "rgb(249, 63, 55)" };
     width: ${({ time }) => `${time}%`};
     border-radius:  ${({ time }) => time > 98 ?'12px' : "12px 0px 0px 12px " };
     `;	

@@ -1,38 +1,45 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Border, Wrapper, Content } from "./Modal.style";
-import { IModalProps } from "./type";
-import { useDispatch } from "react-redux";
+// import { IModalProps } from "./type";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserName } from "../../../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
+import { uiState  as uiSlice, handleOpenModal} from '../../../store/slice/uiSlice'
 
-const Modal: React.FC<IModalProps> = (props) => {
-	const [render, setRender] = useState(<></>);
+const Modal: React.FC = (props) => {
+	const [render, setRender] = useState(<></>);   
+    const dispatch = useDispatch()
+	const {modalAction} = useSelector(uiSlice).modalState;
+
 	useLayoutEffect(() => {
-		if (props.action === "success") {
+        if (!modalAction) return setRender(<></>);
+
+		if (modalAction === "success") {
 			setRender(<ContentSuccessLvl />);
 		}
-        if (props.action === "win") {
+        if (modalAction === "best") {
 			setRender(<ContentNewBest />);
 		}
-		if (props.action === "exit") {
+		if (modalAction === "exit") {
 			setRender(<ContentExit />);
 		}
-		if (props.action === "userName") {
+		if (modalAction === "userName") {
 			setRender(<ContentName handleClose={handleClose} />);
 		}
-        if(props.action === "countDown"){
+        if(modalAction === "countDown"){
             setRender(<ContentCountDown handleClose={handleClose}/> )
         }
-	}, [props]);
+	}, [modalAction]);
 
 	const handleClose = (bool: boolean) => {
-		return props.handleIsOpen(bool, props.action);
+        return dispatch(handleOpenModal({isActive: bool,modalAction}))
+		// return props.handleIsOpen(bool, modalAction);
 	};
 
 	return (
 		<Wrapper onClick={() => handleClose(false)}>
 			<Border onClick={(e) => e.stopPropagation()}>
-				<Content {...props}>{render}</Content>
+				<Content modalAction={modalAction}>{render}</Content>
 			</Border>
 		</Wrapper>
 	);

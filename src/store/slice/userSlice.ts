@@ -1,7 +1,7 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: TSliceState = {
     name: "",
-    best: { isExists: false, time: 0, level: 0 }
+    best: { isExists: true, time: 0, level: 0 }
 }
 type TSliceState = {
     name: string,

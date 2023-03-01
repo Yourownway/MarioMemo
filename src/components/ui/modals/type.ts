@@ -1,14 +1,14 @@
 export interface IModalProps { 
-    isOpen: boolean,
-    handleIsOpen: (bool:boolean,action:EAction)=>void,
-    readonly action: EAction
+    
+    readonly modalAction: EAction
 }
 
 export enum EAction {
+INIT = "",
 SUCCESS = "success",
 EXIT = "exit",
 USERNAME = "userName",
 COUNTDOWN = "countDown",
-WIN = "win"
+BEST = "best"
 
 }
