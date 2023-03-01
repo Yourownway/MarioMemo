@@ -2,42 +2,54 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Border, Wrapper, Content } from "./Modal.style";
 // import { IModalProps } from "./type";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserName } from "../../../store/slice/userSlice";
+import  {userState as userSlice, updateUserName } from "../../../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
-import { uiState  as uiSlice, handleOpenModal} from '../../../store/slice/uiSlice'
+import {
+	uiState as uiSlice,
+	handleOpenModal,
+} from "../../../store/slice/uiSlice";
+import {
+	handleIsPlaying,
+	handleIsResumeActive,
+} from "../../../store/slice/gameSlice";
 
 const Modal: React.FC = (props) => {
-	const [render, setRender] = useState(<></>);   
-    const dispatch = useDispatch()
-	const {modalAction} = useSelector(uiSlice).modalState;
+	const [render, setRender] = useState(<></>);
+	const dispatch = useDispatch();
+	const { modalAction } = useSelector(uiSlice).modalState;
 
 	useLayoutEffect(() => {
-        if (!modalAction) return setRender(<></>);
+		if (!modalAction) return setRender(<></>);
 
 		if (modalAction === "success") {
 			setRender(<ContentSuccessLvl />);
 		}
-        if (modalAction === "best") {
+		if (modalAction === "best") {
 			setRender(<ContentNewBest />);
 		}
 		if (modalAction === "exit") {
-			setRender(<ContentExit />);
+			setRender(<ContentExit handleIsOpen={handleIsOpen} />);
 		}
 		if (modalAction === "userName") {
-			setRender(<ContentName handleClose={handleClose} />);
+			setRender(<ContentName handleIsOpen={handleIsOpen} />);
 		}
-        if(modalAction === "countDown"){
-            setRender(<ContentCountDown handleClose={handleClose}/> )
-        }
+		if (modalAction === "countDown") {
+			setRender(<ContentCountDown handleIsOpen={handleIsOpen} />);
+		}
 	}, [modalAction]);
 
-	const handleClose = (bool: boolean) => {
-        return dispatch(handleOpenModal({isActive: bool,modalAction}))
-		// return props.handleIsOpen(bool, modalAction);
+	const handleIsOpen = (bool: boolean) => {
+		return dispatch(handleOpenModal({ isActive: bool, modalAction }));
 	};
 
 	return (
-		<Wrapper onClick={() => handleClose(false)}>
+		<Wrapper
+			onClick={() => {
+				if (modalAction === "exit")
+					dispatch(handleIsPlaying({ bool: true }));
+				handleIsOpen(false);
+			}}
+		>
 			<Border onClick={(e) => e.stopPropagation()}>
 				<Content modalAction={modalAction}>{render}</Content>
 			</Border>
@@ -61,32 +73,36 @@ const ContentSuccessLvl = () => {
 		</div>
 	);
 };
-const ContentCountDown = ({ handleClose }: IContent ) => {
-    const [count,setCount] = useState(3);
-    useEffect(() => {
-     
-      const timer = setInterval(()=>{
-        setCount((prev)=> prev -1)
-      },1000)
-      if(count<1) {
-        clearInterval(timer)
-        handleClose(false)
-    }
-      return () => {
-        clearInterval(timer)
-      }
-    }, [count])
-    
-	return (
-		<div>
-			
-		</div>
-	);
+const ContentCountDown = ({ handleIsOpen }: IContent) => {
+	const [count, setCount] = useState(3);
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setCount((prev) => prev - 1);
+		}, 1000);
+		if (count < 1) {
+			clearInterval(timer);
+			handleIsOpen(false);
+		}
+		return () => {
+			clearInterval(timer);
+		};
+	}, [count]);
+
+	return <div></div>;
 };
-const ContentExit = () => {
+const ContentExit = ({ handleIsOpen }: IContent) => {
 	const [stay, setStay] = useState(true);
+	const dispatch = useDispatch();
+	let navigate = useNavigate();
 	const handleClick = (bool: boolean) => {
-		setStay(bool);
+		if (bool) {
+			navigate("/");
+			dispatch(handleIsResumeActive({ bool: true }));
+			return handleIsOpen(false);
+		} else {
+			dispatch(handleIsPlaying({ bool: true }));
+			return handleIsOpen(false);
+		}
 	};
 	return (
 		<div>
@@ -106,21 +122,25 @@ const ContentExit = () => {
 };
 
 interface IContent {
-	handleClose: (bool: boolean) => void;
+	handleIsOpen: (bool: boolean) => void;
 }
-const ContentName = ({ handleClose }: IContent) => {
-	const [name, setName] = useState("");
+const ContentName = ({ handleIsOpen }: IContent) => {
+	const {name} = useSelector(userSlice)
+    const [currentName,setCurrentName] = useState(name)
+
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setName(e.target.value.toUpperCase());
+		setCurrentName(e.target.value.toUpperCase());
 	};
 	const handleName = () => {
-		if (name) {
-			dispatch(updateUserName({ name }));
-			navigate("/game");
-			return handleClose(false);
+		if (currentName) {
+			dispatch(updateUserName({ name:currentName }));
+            if(!name){
+                navigate("/game");
+            }
+			return handleIsOpen(false);
 		}
 	};
 	return (
@@ -131,7 +151,7 @@ const ContentName = ({ handleClose }: IContent) => {
 					autoFocus
 					type="text"
 					onChange={(e) => handleChange(e)}
-					value={name}
+					value={currentName}
 				/>
 				<p
 					onClick={handleName}

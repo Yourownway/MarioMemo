@@ -56,7 +56,7 @@
         flex-direction: column;
         justify-content: center;
         flex-grow: 1;
-    
+        margin-bottom: 70px;    
 }
 .menu_container p, .menu_container a {
     

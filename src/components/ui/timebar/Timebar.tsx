@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+	gameState as gameSlice,
+	decrementTimeLeft,
+} from "../../../store/slice/gameSlice";
 interface IProgress {
-	readonly time: number;
+	readonly timeLeft: number;
 }
 
 const Container = styled.div`
@@ -14,7 +18,7 @@ const Container = styled.div`
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0);
-    z-index: 1;
+	z-index: 1;
 `;
 const BaseBox = styled.div`
 	border-radius: 12px;
@@ -22,73 +26,52 @@ const BaseBox = styled.div`
 	position: absolute;
 	left: 0;
 	top: 0;
-	/* transition: width 10s ease-in-out; */
 `;
 
 const Background = styled(BaseBox)`
 	background: #f8efef;
 	width: 100%;
 `;
-/* border-radius: ${(p) =>
-		p.percent > 95 ? `12px` : "  12px 0px 0px 12px "}; */
 const Progress = styled(BaseBox)<IProgress>`
 	/* background: repeating-linear-gradient(45deg,blue,white 12px); */
 	background-color: rgb(10, 186, 250);
-    background-color:  ${({ time }) => time > 10 ?'rgb(10, 186, 250)' : "rgb(249, 63, 55)" };
-    width: ${({ time }) => `${time}%`};
-    border-radius:  ${({ time }) => time > 98 ?'12px' : "12px 0px 0px 12px " };
-    `;	
+	background-color: ${({ timeLeft }) =>
+		timeLeft > 10 ? "rgb(10, 186, 250)" : "rgb(249, 63, 55)"};
+	width: ${({ timeLeft }) => `${timeLeft}%`};
+	border-radius: ${({ timeLeft }) =>
+		timeLeft > 98 ? "12px" : "12px 0px 0px 12px "};
+`;
 
-
-// const [running, setRunning] = useState(false);
-// const [progress, setProgress] = useState(0);
-
-// useEffect(() => {
-//   if (running) {
-//     interval = setInterval(() => {
-//       setProgress((prev) => prev + 1);
-//     }, 10);
-//   } else {
-//     clearInterval(interval);
-//   }
-// }, [running]);
-
-// useEffect(() => {
-//   if (progress === 100) {
-//     setRunning(false);
-//     clearInterval(interval);
-//   }
-// }, [progress]);
-            // @ts-ignore
+// @ts-ignore
 let timer = undefined;
 function Timebar() {
-	const [percent, setPercent] = useState(100);
-    const [start,setStart] = useState(true)
-    const initTime = 600
-	const [time, setTime] = useState(initTime);
- 
-    
-	useEffect(() => {
-        if(!start) return
-        if(time <= 0) return
-         timer = setInterval(() => setTime((prev)=>prev-1), 1000);
-        return () => {
-            // @ts-ignore
-            clearInterval(timer);
-		};
-	}, [time,start]);
+	const { timeLeft,isPlaying } = useSelector(gameSlice);
+	const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (time <= 0) {
-            // @ts-ignore
-            clearInterval(timer);
-        }
-      }, [time]);
+	useEffect(() => {
+		if (!isPlaying) return;
+		if (timeLeft <= 0) return;
+		timer = setInterval(() => dispatch(decrementTimeLeft()), 1000);
+		return () => {
+			// @ts-ignore
+			clearInterval(timer);
+		};
+	}, [timeLeft, isPlaying]);
+
+	useEffect(() => {
+		if (timeLeft <= 0) {
+			// @ts-ignore
+			clearInterval(timer);
+		}
+	}, [timeLeft]);
 	return (
-		<Container >
-			<Background className="animate__bounceIn animate__animated"/>
+		<Container>
+			<Background className="animate__bounceIn animate__animated" />
 			{/* @ts- ignore */}
-			<Progress className="animate__bounceIn animate__animated" {...{ time: time/600*100 }} />
+			<Progress
+				className="animate__bounceIn animate__animated"
+				{...{ timeLeft: (timeLeft / 600) * 100 }}
+			/>
 		</Container>
 	);
 }

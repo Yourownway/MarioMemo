@@ -1,42 +1,61 @@
-import { CaseReducer, createSlice } from "@reduxjs/toolkit";
-const initialState : IGameStateSlice = {
+import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
+const initialState: IGameStateSlice = {
     isSaved: false,
-    level:0,
-    time:0,
-    itemArray:[],
+    level: 1,
+    timeSpend: 0,
+    initTime: 600,
+    timeLeft: 600,
+    itemArray: [],
     itemLeft: [],
     isPlaying: false,
+    isResumeActive: false,
 }
-interface IGameStateSlice  {
+interface IGameStateSlice {
     isSaved: boolean,
     level: number,
-    time:number,
-    itemArray:any[],
-    itemLeft:any[],
-    isPlaying:boolean
+    timeSpend: number,
+    initTime: number,
+    timeLeft: number,
+    itemArray: any[],
+    itemLeft: any[],
+    isPlaying: boolean
+    isResumeActive: boolean,
 }
-interface TSetIsPlaying {
+interface TSetIsActive {
     payload: { bool: boolean }
     type: string
 }
-
-const setIsPlaying: CaseReducer<IGameStateSlice, TSetIsPlaying> = (state, action: TSetIsPlaying) => {
-    const {bool} = action.payload
+const setTimeLeft: CaseReducer<IGameStateSlice> = (state) => {
+    state.timeLeft -= 1
+}
+const setIsPlaying: CaseReducer<IGameStateSlice, TSetIsActive> = (state, action: TSetIsActive) => {
+    const { bool } = action.payload
     state.isPlaying = bool
+}
+const setIsResumeActive: CaseReducer<IGameStateSlice, TSetIsActive> = (state, action: TSetIsActive) => {
+    const { bool } = action.payload
+    state.isResumeActive = bool
+}
+
+const setResetGame:  CaseReducer<IGameStateSlice>  = (state) => {
+state = initialState
 }
 const gameSlice = createSlice({
     name: 'saveGame',
     initialState,
     reducers: {
-      handleIsPlaying: setIsPlaying,
-  
+        handleIsPlaying: setIsPlaying,
+        handleIsResumeActive: setIsResumeActive,
+        handleResetGame: setResetGame,
+        decrementTimeLeft: setTimeLeft
+
     },
-  })
+})
 
 
-  export const { handleIsPlaying } = gameSlice.actions;
+export const { handleIsPlaying,handleIsResumeActive, decrementTimeLeft,handleResetGame } = gameSlice.actions;
 
-  export const uiState = (state: { game: IGameStateSlice }) => state.game;
-  
-  export default gameSlice.reducer;
+export const gameState = (state: { game: IGameStateSlice }) => state.game;
+
+export default gameSlice.reducer;
 
