@@ -45,7 +45,7 @@ const ScoreTop: React.FC = () => {
 				<div></div>
 			)}
 		</div>
-		{gameState.isPlaying && userState.step === "game" && <Timebar timeLeft={time} decrementTimeLeft={decrementTimeLeft} />}
+		{ userState.step === "game" && <Timebar timeLeft={time} decrementTimeLeft={decrementTimeLeft} />}
 		</>
 	);
 };

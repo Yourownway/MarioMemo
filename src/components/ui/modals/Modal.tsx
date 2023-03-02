@@ -8,7 +8,7 @@ import {
 	uiState as uiSlice,
 	handleOpenModal,
 } from "../../../store/slice/uiSlice";
-import {
+import {gameState as gameSlice,
 	handleIsPlaying,
 	handleIsResumeActive,
 } from "../../../store/slice/gameSlice";
@@ -16,13 +16,16 @@ import {
 const Modal: React.FC = (props) => {
 	const [render, setRender] = useState(<></>);
 	const dispatch = useDispatch();
-	const { modalAction } = useSelector(uiSlice).modalState;
+	const { modalAction, isActive } = useSelector(uiSlice).modalState;
+	const gameState = useSelector(gameSlice)
+	// console.log("🚀 ~ file: Modal.tsx:21 ~ gameState:", gameState.isPlaying)
+	// console.log("🚀 ~ file: Modal.tsx:20 ~ isActive:", isActive)
 
 	useLayoutEffect(() => {
 		if (!modalAction) return setRender(<></>);
 
-		if (modalAction === "success") {
-			setRender(<ContentSuccessLvl />);
+		if (modalAction === "lvlUp") {
+			setRender(<ContentLvlUp />);
 		}
 		if (modalAction === "best") {
 			setRender(<ContentNewBest />);
@@ -41,13 +44,16 @@ const Modal: React.FC = (props) => {
 	const handleIsOpen = (bool: boolean) => {
 		return dispatch(handleOpenModal({ isActive: bool, modalAction }));
 	};
+	 useEffect(() => {
+	 	if (isActive && gameState.isPlaying ) dispatch(handleIsPlaying({ bool: false }));
+	 }, [isActive])
 
 	return (
 		<Wrapper
 			onClick={() => {
 				if (modalAction === "exit")
 					dispatch(handleIsPlaying({ bool: true }));
-				handleIsOpen(false);
+				    handleIsOpen(false);
 			}}
 		>
 			<Border onClick={(e) => e.stopPropagation()}>
@@ -65,11 +71,11 @@ const ContentNewBest = () => {
 		</div>
 	);
 };
-const ContentSuccessLvl = () => {
+const ContentLvlUp = () => {
 	return (
 		<div>
-			<p>NEW BEST SCORE !</p>
-			<p>LVL 3 TIME 3:24</p>
+			<p>LEVEL UP !</p>
+			
 		</div>
 	);
 };
