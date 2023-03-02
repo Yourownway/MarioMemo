@@ -78,7 +78,6 @@ const GamePage: React.FC = () => {
 			) : (
 				<>
 					<Grid />
-					<Timebar />
 				</>
 			)}
 		</div>

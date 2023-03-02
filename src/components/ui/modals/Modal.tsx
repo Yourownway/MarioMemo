@@ -97,6 +97,7 @@ const ContentExit = ({ handleIsOpen }: IContent) => {
 	const handleClick = (bool: boolean) => {
 		if (bool) {
 			navigate("/");
+			dispatch(handleIsPlaying({ bool: false }));
 			return handleIsOpen(false);
 		} else {
 			dispatch(handleIsPlaying({ bool: true }));
@@ -105,7 +106,7 @@ const ContentExit = ({ handleIsOpen }: IContent) => {
 	};
 	return (
 		<div>
-			<p>CONTINUE GAME ?</p>
+			<p>EXIT GAME ?</p>
 			<div>
 				<p className="selectable" onClick={() => handleClick(true)}>
 					{" "}

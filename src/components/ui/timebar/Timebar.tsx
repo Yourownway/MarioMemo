@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	gameState as gameSlice,
-	decrementTimeLeft,
+	gameState as gameSlice, updateTimeLeft
 } from "../../../store/slice/gameSlice";
+import { uiState } from "../../../store/slice/uiSlice";
 interface IProgress {
 	readonly timeLeft: number;
 }
@@ -42,16 +42,29 @@ const Progress = styled(BaseBox)<IProgress>`
 		timeLeft > 98 ? "12px" : "12px 0px 0px 12px "};
 `;
 
+interface P {
+	timeLeft: number;
+	decrementTimeLeft: () => void;
+}
 // @ts-ignore
-let timer = undefined;
-function Timebar() {
-	const { timeLeft,isPlaying } = useSelector(gameSlice);
+
+function Timebar({ timeLeft,decrementTimeLeft }: P) {
+	const { isPlaying } = useSelector(gameSlice);
 	const dispatch = useDispatch();
+
+    useEffect(() => {
+	  
+	
+	  return () => {
+		dispatch(updateTimeLeft({time: timeLeft}))
+	  }
+	}, [])
+	
 
 	useEffect(() => {
 		if (!isPlaying) return;
 		if (timeLeft <= 0) return;
-		timer = setInterval(() => dispatch(decrementTimeLeft()), 1000);
+		let timer = setInterval(() => decrementTimeLeft(), 1000);
 		return () => {
 			// @ts-ignore
 			clearInterval(timer);

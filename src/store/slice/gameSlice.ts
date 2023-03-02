@@ -25,8 +25,8 @@ interface TSetIsActive {
     payload: { bool: boolean }
     type: string
 }
-const setTimeLeft: CaseReducer<IGameStateSlice> = (state) => {
-    state.timeLeft -= 1
+const setTimeLeft: CaseReducer<IGameStateSlice, PayloadAction<{time:number}>> = (state,action) => {
+    state.timeLeft = action.payload.time
 }
 const setIsPlaying: CaseReducer<IGameStateSlice, TSetIsActive> = (state, action: TSetIsActive) => {
     const { bool } = action.payload
@@ -44,13 +44,13 @@ const gameSlice = createSlice({
         handleIsPlaying: setIsPlaying,
         handleIsResumeActive: setIsResumeActive,
         handleResetGame: () => initialState,
-        decrementTimeLeft: setTimeLeft
+        updateTimeLeft: setTimeLeft
 
     },
 })
 
 
-export const { handleIsPlaying,handleIsResumeActive, decrementTimeLeft,handleResetGame } = gameSlice.actions;
+export const { handleIsPlaying,handleIsResumeActive, updateTimeLeft,handleResetGame } = gameSlice.actions;
 
 export const gameState = (state: { game: IGameStateSlice }) => state.game;
 
