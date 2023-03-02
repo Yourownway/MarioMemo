@@ -2,9 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import boxeLogo from "../../../assets/img/grid-box.png";
 import itemListLogo from "../../../assets/img/marioSprite_526x466.png";
-import { getItemsSpriteArray } from "../../../utils/game/sprite";
+import { initItemsSpriteArray } from "../../../utils/game/sprite";
 import GridItem from "./GridItem";
 import { v4 as uuid } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
+import { uiState as uiSlice , handleOpenModal} from "../../../store/slice/uiSlice";
+import { gameState as gameSlice, handleLevelUp } from "../../../store/slice/gameSlice";
+import { EAction } from "../modals/type";
 
 const DynamicGrid = styled.div`
 	margin: 0 auto;
@@ -19,29 +23,54 @@ const DynamicGrid = styled.div`
 	grid-auto-rows: minmax(10px, auto);
 `;
 
+interface IItem  {
+	positionX: number,
+	positionY:number,
+	id:string,
+	isActive:boolean,
+	ref?: React.MutableRefObject<HTMLDivElement>
+}
+
 function Grid() {
-	const [itemByPair, setItemByPair]: any[] = useState([]);
-	const [itemLeftByLevel, setItemLeftByLevel]: any[] = useState([]);
-	const [itemToCompare, setItemToCompare]: any = useState(null);
+	const [itemByPair, setItemByPair] = useState<IItem[]|null>(null);
+	console.log("🚀 ~ file: Grid.tsx:36 ~ Grid ~ itemByPair:", itemByPair?.length)
+	const [itemLeftByLevel, setItemLeftByLevel] = useState< IItem[]>([]);
+	const [itemToCompare, setItemToCompare] = useState<IItem|null>(null);
+	const dispatch = useDispatch();
+	const uiState = useSelector(uiSlice);
+	const gameState = useSelector(gameSlice);
 
 	const [currentLevel, setCurrentLevel] = useState(1);
+	const handleClick = useCallback(
+	(elem: IItem, ref  : React.MutableRefObject<HTMLDivElement>) => {
 
-	const handleClick = (elem: any, ref: any) => {
-		if (!ref.current.classList.contains("active_item")) {
+		if(!itemByPair) return;
+		if (!ref?.current.classList.contains("active_item")) {
 			ref.current.classList.add("active_item");
 		} else return;
 		if (!itemToCompare) {
+		
 			ref.current.id = elem.id;
-			return setItemToCompare({ id: elem.id, ref });
-		} else if (itemToCompare.id && itemToCompare.id === elem.id) {
-			const itemLeft = [...itemLeftByLevel];
-			const indexToRemove = itemLeft.findIndex((e) => e.id === elem.id);
-			delete itemLeft[indexToRemove];
-			setItemLeftByLevel(itemLeft.filter((elem) => !!elem));
+			return setItemToCompare({ ...elem , ref });
+		} else if (itemToCompare.id && itemToCompare.id == elem.id) {
+		
+			
+			const updateGridStatus = itemByPair.map((item)=>{
+				if(item.id === elem.id) item.isActive = true
+				return item
+			})
+			const checkIfLvlIsDown = updateGridStatus.filter(item => !item.isActive).length
+			setItemByPair(updateGridStatus)
+			if(checkIfLvlIsDown === 0) return levelUp()
+			// const itemLeft = [...itemLeftByLevel];
+			// const indexToRemove = itemLeft.findIndex((e) => e.id === elem.id);
+			// delete itemLeft[indexToRemove];
+			// setItemLeftByLevel(itemLeft.filter((elem) => !!elem));
 		} else if (itemToCompare.id != elem.id) {
 			// to do displayErrorMessage()
+
 			setTimeout(() => {
-				itemToCompare.ref.current.classList.remove("active_item");
+				itemToCompare.ref?.current.classList.remove("active_item");
 				ref.current.classList.remove("active_item");
 			}, 1500);
 		}
@@ -52,18 +81,27 @@ function Grid() {
 		// si les id sont different on remove l'id de de l'array d'item
 		// sinon on retourne les cart
 		// on remet le tableau 1 à 0
-	};
+	},
+  [itemByPair,itemToCompare],
+)
+
+const levelUp = () => {
+    dispatch(handleLevelUp())
+	dispatch(handleOpenModal({isActive:true, modalAction:EAction.LVLUP}))
+}
 
 	const generateGrid = (level: number) => {
 		let ratio = (247 / 378) * level * 1.2;
-		const arrayOfItem: any[] = getItemsSpriteArray(level);
+		const arrayOfItem: any[] = initItemsSpriteArray(level);
 		setItemLeftByLevel(arrayOfItem);
 		const arrayOfItemByPair = [...arrayOfItem, ...arrayOfItem];
 		setItemByPair(arrayOfItemByPair);
 	};
 	useEffect(() => {
-		generateGrid(currentLevel);
-	}, []);
+		if(gameState.level<= 4){
+			generateGrid(gameState.level);
+		}
+	}, [gameState.level]);
 
 	const itemConfigStyle = {
 		backgroundImage: `url(${itemListLogo})`,
@@ -73,10 +111,10 @@ function Grid() {
 
 	return (
 		<>
-			{currentLevel &&
+			{gameState.level &&
 			<DynamicGrid
 				className="animate__backInDown animate__animated"
-				{...{ level: currentLevel }}
+				{...{ level: gameState.level }}
 			>
 				{/* @ts-ignore */}
 				{itemByPair && itemByPair.map((elem, i) => (
@@ -91,5 +129,6 @@ function Grid() {
 		</>
 	);
 }
+
 
 export default Grid;

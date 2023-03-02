@@ -1,7 +1,7 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: IGameStateSlice = {
     isSaved: false,
-    level: 1,
+    level: 4,
     timeSpend: 0,
     initTime: 600,
     timeLeft: 600,
@@ -9,6 +9,7 @@ const initialState: IGameStateSlice = {
     itemLeft: [],
     isPlaying: false,
     isResumeActive: false,
+
 }
 interface IGameStateSlice {
     isSaved: boolean,
@@ -20,6 +21,7 @@ interface IGameStateSlice {
     itemLeft: any[],
     isPlaying: boolean
     isResumeActive: boolean,
+
 }
 interface TSetIsActive {
     payload: { bool: boolean }
@@ -37,6 +39,9 @@ const setIsResumeActive: CaseReducer<IGameStateSlice, TSetIsActive> = (state, ac
     state.isResumeActive = bool
 }
 
+const setLevelUp :  CaseReducer<IGameStateSlice> = (state) => {
+    state.level += 1
+}
 const gameSlice = createSlice({
     name: 'saveGame',
     initialState,
@@ -44,13 +49,14 @@ const gameSlice = createSlice({
         handleIsPlaying: setIsPlaying,
         handleIsResumeActive: setIsResumeActive,
         handleResetGame: () => initialState,
-        updateTimeLeft: setTimeLeft
+        updateTimeLeft: setTimeLeft,
+        handleLevelUp: setLevelUp,
 
     },
 })
 
 
-export const { handleIsPlaying,handleIsResumeActive, updateTimeLeft,handleResetGame } = gameSlice.actions;
+export const { handleIsPlaying,handleIsResumeActive, updateTimeLeft,handleResetGame,handleLevelUp } = gameSlice.actions;
 
 export const gameState = (state: { game: IGameStateSlice }) => state.game;
 

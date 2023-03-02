@@ -1,5 +1,5 @@
 .App {
-    min-height: 100vh;
+
     width: auto;
     background: linear-gradient(180deg, #5B8AF1 0%, rgba(91, 138, 241, 0.6) 100%);
     min-width: 800px;
@@ -8,23 +8,27 @@
 .startPage_container{
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - var(--main-brickBottom-size) - var(--main-scoreTop-size) - 20px);
+    /* min-height: calc(100vh - var(--main-brickBottom-size) - var(--main-scoreTop-size) - 20px); */
+    height: 80vh;
 }
 
 
 .brickBottom {
     background-image: url("../../assets/img/build-box.png");
     background-size: 40px 41.5px;
-    position: absolute;
+   
     bottom: 0;
-    height: var(--main-brickBottom-size);
+    height: 10vh;
     width: 100%;
 }
 .scoreTop_container{
-    padding: 10px 35px;
+    padding: 0 4%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: var(--main-scoreTop-size);
+    height: 10vh;
+
 }
 .scoreTop_container > div{
     display: flex;
@@ -39,7 +43,7 @@
 }
 
 .logo_container img {
-    width: 500px;
+    max-width: 400px;
     
 }
 
@@ -56,14 +60,13 @@
         flex-direction: column;
         justify-content: center;
         flex-grow: 1;
-        margin-bottom: 70px;    
+          
 }
 .menu_container p, .menu_container a {
     
     width: 250px;
     margin: 10px auto;
-    padding-left: 90px;
-    text-align: left;
+    text-align: center;
     
  
 }
@@ -77,14 +80,14 @@
 }
 .mush_hover {
     background-image: url("../../assets/img/mush-hover.png");
-    background-size: 40px 41.5px;
+    background-size: 30px 30px;
     width: 40px;
     height: 42px;
     opacity: 0;
     background-repeat: no-repeat;
     position: absolute;
-    left: 30px;
-    top: 3px;
+    left: 0px;
+    top: 4px;
 }
 
 
@@ -114,8 +117,8 @@
     animation: 1.5s linear  initGrid;
 
     position: relative;
-    width: 80px;
-    height:80px;
+    width: 70px;
+    height:70px;
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
@@ -144,10 +147,12 @@
 }
   
   .flip-item-back {
-    /* color: white; */
-    margin: -23% auto;
+    /* for lvl 1 and 2 with width 80px */
+    /* margin: -23% auto;
+    transform: rotateY(180deg) scale(0.68); */
+    margin: -33% auto;
     background-color: rgb(203, 182, 112);
-    transform: rotateY(180deg) scale(0.68);
+    transform: rotateY(180deg) scale(0.59);
   }
 
   .countDown_container{

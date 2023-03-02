@@ -13,11 +13,10 @@ export default function UseExit() {
     const onExit = useCallback(
         (e: KeyboardEvent, action: EAction) => {
             if (e.key === "Escape") {
-               const isActive = !uiState.modalState.isActive
-                dispatch(handleIsPlaying({ bool: isActive }));
-                   
+               const isActive = uiState.modalState.isActive
+                dispatch(handleIsPlaying({ bool: isActive }));    
                 dispatch(
-                    handleOpenModal({ isActive, modalAction: action })
+                    handleOpenModal({ isActive: !isActive, modalAction: action })
                 );
            }
         },

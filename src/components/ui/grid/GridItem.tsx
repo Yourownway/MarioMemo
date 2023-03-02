@@ -1,13 +1,19 @@
-import { useEffect, useRef } from "react";
+import  React, { useEffect, useRef } from "react";
 
 const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
-	const itemRef = useRef(null);
+	const itemRef : React.Ref<HTMLDivElement> = useRef(null);
 
 	const style = {
 		...props.configStyle,
 		backgroundPositionX: props.data.positionX,
 		backgroundPositionY: props.data.positionY,
 	};
+
+	useEffect(() => {
+	 console.log(props.data.isActive,"aaaa");
+	 
+	}, [props.data.isActive])
+	
 	return (
 		<div
 			onClick={() => props.handleClick(props.data, itemRef)}
@@ -21,4 +27,5 @@ const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
 	);
 };
 
-export default GridItem;
+export default React.memo(GridItem);
+
