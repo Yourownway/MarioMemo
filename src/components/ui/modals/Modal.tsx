@@ -97,7 +97,6 @@ const ContentExit = ({ handleIsOpen }: IContent) => {
 	const handleClick = (bool: boolean) => {
 		if (bool) {
 			navigate("/");
-			dispatch(handleIsResumeActive({ bool: true }));
 			return handleIsOpen(false);
 		} else {
 			dispatch(handleIsPlaying({ bool: true }));

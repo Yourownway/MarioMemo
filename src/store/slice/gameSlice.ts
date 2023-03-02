@@ -37,16 +37,13 @@ const setIsResumeActive: CaseReducer<IGameStateSlice, TSetIsActive> = (state, ac
     state.isResumeActive = bool
 }
 
-const setResetGame:  CaseReducer<IGameStateSlice>  = (state) => {
-state = initialState
-}
 const gameSlice = createSlice({
     name: 'saveGame',
     initialState,
     reducers: {
         handleIsPlaying: setIsPlaying,
         handleIsResumeActive: setIsResumeActive,
-        handleResetGame: setResetGame,
+        handleResetGame: () => initialState,
         decrementTimeLeft: setTimeLeft
 
     },

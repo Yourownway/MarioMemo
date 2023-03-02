@@ -25,7 +25,7 @@ const ScoreTop: React.FC = () => {
 						})
 					);}}>
             {userState.name}</p>
-			{gameState.isResumeActive ? (
+			{gameState.isResumeActive || gameState.isPlaying ? (
 				<div>
 					<p>LVL: {gameState.level}</p>
 					<p>TIME: {secondsToMinutesAndSeconds(gameState.timeLeft)}</p>
