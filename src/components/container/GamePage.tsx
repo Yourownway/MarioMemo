@@ -12,9 +12,9 @@ import {
 	handleIsPlaying,handleIsResumeActive
 } from "../../store/slice/gameSlice";
 import UseExit from "../../hooks/event/UseExit";
+import { handleStep } from "../../store/slice/userSlice";
 
 const GamePage: React.FC = () => {
-	console.log("render")
 	const dispatch = useDispatch();
 	const uiState = useSelector(uiSlice);
 	const gameState = useSelector(gameSlice);
@@ -24,6 +24,7 @@ const GamePage: React.FC = () => {
 	let navigate = useNavigate();
 
 	useEffect(() => {
+		dispatch(handleStep({step:"game"}))
 		if (!gameState.isResumeActive)
 			dispatch(handleIsResumeActive({ bool: true }));
 	}, [])
@@ -48,7 +49,6 @@ const GamePage: React.FC = () => {
 		}
 	};
 	useLayoutEffect(() => {
-		if(uiState.modalState.isActive) return
 		if (countDown < 1 ) {
 	     //prevent initGrid animation
 		  
@@ -67,7 +67,7 @@ const GamePage: React.FC = () => {
 		return () => {
 			clearInterval(timer);
 		};
-	}, [countDown,uiState.modalState.isActive]);
+	}, [countDown]);
 
 	return (
 		<div className="gamePage_container">

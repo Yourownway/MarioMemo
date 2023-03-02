@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import { EAction } from "../ui/modals/type";
 import { useDispatch, useSelector } from "react-redux";
-import { userState as userSlice } from "../../store/slice/userSlice";
+import { userState as userSlice,handleStep} from "../../store/slice/userSlice";
 import { uiState as uiSlice, handleOpenModal } from "../../store/slice/uiSlice";
 import { gameState as gameSlice,handleIsPlaying,handleResetGame} from "../../store/slice/gameSlice";
 
@@ -14,6 +14,7 @@ const StartPage: React.FC = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		dispatch(handleStep({step:"start"}))
 		dispatch(handleIsPlaying({ bool: false }))
 	}, [])
 

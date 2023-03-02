@@ -27,8 +27,8 @@ const ScoreTop: React.FC = () => {
 		<>
 
 		<div className="scoreTop_container">
-			<p className={!gameState.isPlaying ?"pointer" : ""} onClick={()=>
-             {   if (!gameState.isPlaying)
+			<p className={userState.step === "start" ?"pointer" : ""} onClick={()=>
+             {   if (userState.step === "start")
 					dispatch(
 						handleOpenModal({
 							isActive: true,
@@ -45,7 +45,7 @@ const ScoreTop: React.FC = () => {
 				<div></div>
 			)}
 		</div>
-		{gameState.isPlaying && <Timebar timeLeft={time} decrementTimeLeft={decrementTimeLeft} />}
+		{gameState.isPlaying && userState.step === "game" && <Timebar timeLeft={time} decrementTimeLeft={decrementTimeLeft} />}
 		</>
 	);
 };

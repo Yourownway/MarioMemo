@@ -1,11 +1,13 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: TSliceState = {
     name: "",
-    best: { isExists: true, time: 0, level: 0 }
+    best: { isExists: true, time: 0, level: 0 },
+    step:"start"
 }
 type TSliceState = {
     name: string,
-    best: Best
+    best: Best,
+    step:string,
 }
 
 interface TUpdateNameAction {
@@ -27,7 +29,11 @@ const setName: CaseReducer<TSliceState, TUpdateNameAction> = (state, action: TUp
     state.name = name
 
 }
+const setStep: CaseReducer<TSliceState, PayloadAction<{step:string}>> = (state, action) => {
+    const { step } = action.payload
+    state.step = step
 
+}
 const setScore: CaseReducer<TSliceState, TUpdateScoreAction> = (state, action: TUpdateScoreAction) => {
     const { best } = action.payload
     state.best = { isExists: true, time: best.time || 0, level: best.level || 0 }
@@ -38,13 +44,14 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         updateUserName: setName,
-        updateUserScore: setScore
+        updateUserScore: setScore,
+        handleStep: setStep
     },
 })
 
 
 export const { updateUserName,
-    updateUserScore } = userSlice.actions;
+    updateUserScore,handleStep } = userSlice.actions;
 
 export const userState = (state: { user: TSliceState }) => state.user;
 
