@@ -34,7 +34,7 @@ const Content = styled.div<IModalProps>`
     
     min-height: 60vh;
     margin: 21px 30px;
-    background: ${(p: IModalProps) => p.modalAction === "success" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
+    background: ${(p: IModalProps) => p.modalAction === "lvlUp" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
     display: flex;
     justify-content:center;
     align-items:center;
@@ -44,12 +44,12 @@ const Content = styled.div<IModalProps>`
         flex-direction:column;
         align-items: center;
         justify-content:space-around;
-        height:80%;    
+        min-height:200px;    
         & > div {
 
             display: flex;
             width:100%;
-            justify-content: space-around;
+            justify-content: space-between;
           
             & > p:hover{
                 cursor:pointer;
