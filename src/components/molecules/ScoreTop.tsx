@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userState as userSlice } from "../../store/slice/userSlice";
 import { uiState as uiSlice, handleOpenModal} from "../../store/slice/uiSlice";
-import { gameState as gameSlice } from "../../store/slice/gameSlice";
+import { gameState as gameSlice, updateTimeLeft } from "../../store/slice/gameSlice";
 import { secondsToMinutesAndSeconds } from "../../store/utils/timer";
 import { EAction } from "../ui/modals/type";
 import Timebar from "../ui/timebar/Timebar";
@@ -13,12 +13,16 @@ const ScoreTop: React.FC = () => {
 	const uiState = useSelector(uiSlice);
     const dispatch = useDispatch()
 	const [time, setTime] = useState(gameState.timeLeft)
+	
 
-	useEffect(() => {
+	useEffect(() => { 
 		if (time != gameState.timeLeft)
 			setTime(gameState.timeLeft)
 	}, [gameState.timeLeft])
 
+	useEffect(() => {
+		dispatch(updateTimeLeft({ time }))
+	}, [userState.step])
 	const decrementTimeLeft = () => {
 		setTime(current => current - 1)
 	}

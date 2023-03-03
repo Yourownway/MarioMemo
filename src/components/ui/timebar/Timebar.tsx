@@ -46,41 +46,26 @@ interface P {
 	timeLeft: number;
 	decrementTimeLeft: () => void;
 }
-// @ts-ignore
 
 function Timebar({ timeLeft,decrementTimeLeft }: P) {
 	const { isPlaying } = useSelector(gameSlice);
 	const dispatch = useDispatch();
 
-    useEffect(() => {
-	  
-	
-	  return () => {
-		dispatch(updateTimeLeft({time: timeLeft}))
-	  }
-	}, [])
+
 	
 
 	useEffect(() => {
 		if (!isPlaying) return;
-		if (timeLeft <= 0) return;
 		let timer = setInterval(() => decrementTimeLeft(), 1000);
+		if (timeLeft <= 0) return clearInterval(timer);
 		return () => {
-			// @ts-ignore
 			clearInterval(timer);
 		};
 	}, [timeLeft, isPlaying]);
-
-	useEffect(() => {
-		if (timeLeft <= 0) {
-			// @ts-ignore
-			clearInterval(timer);
-		}
-	}, [timeLeft]);
+;
 	return (
 		<Container>
 			<Background className="animate__bounceIn animate__animated" />
-			{/* @ts- ignore */}
 			<Progress
 				className="animate__bounceIn animate__animated"
 				{...{ timeLeft: (timeLeft / 600) * 100 }}
