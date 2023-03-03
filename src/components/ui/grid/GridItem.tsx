@@ -10,7 +10,8 @@ const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
 	};
 
 	useEffect(() => {
-	 console.log(props.data.isActive,"aaaa");
+		if(props.data.isActive)
+		itemRef.current?.classList.add("active_item");
 	 
 	}, [props.data.isActive])
 	
@@ -18,7 +19,6 @@ const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
 		<div
 			onClick={() => props.handleClick(props.data, itemRef)}
 			ref={itemRef}
-			
             className="flip-item-container"
 		>
 			<div className="flip-item-front"></div>

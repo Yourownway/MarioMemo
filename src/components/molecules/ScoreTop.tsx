@@ -23,6 +23,7 @@ const ScoreTop: React.FC = () => {
 	useEffect(() => {
 		dispatch(updateTimeLeft({ time }))
 	}, [userState.step])
+	
 	const decrementTimeLeft = () => {
 		setTime(current => current - 1)
 	}

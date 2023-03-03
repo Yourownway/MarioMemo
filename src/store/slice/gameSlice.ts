@@ -2,7 +2,7 @@ import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IItem } from "../../components/ui/grid/Grid";
 const initialState: IGameStateSlice = {
     isSaved: false,
-    level: 4,
+    level: 1,
     timeSpend: 0,
     initTime: 600,
     timeLeft: 600,
@@ -37,7 +37,12 @@ const setIsResumeActive: CaseReducer<IGameStateSlice, TSetIsActive> = (state, ac
     const { bool } = action.payload
     state.isResumeActive = bool
 }
-
+const setItemByPair: CaseReducer<IGameStateSlice, PayloadAction<{itemByPair: IGameStateSlice["itemByPair"]}>> = (state, action ) => {
+    const  {itemByPair}  = action.payload
+    console.log("🚀 ~ file: gameSlice.ts:42 ~ itemByPair:", itemByPair)
+    //@ts-ignore
+    state.itemByPair = itemByPair
+} 
 const setLevelUp :  CaseReducer<IGameStateSlice> = (state) => {
     state.level += 1
 }
@@ -50,12 +55,12 @@ const gameSlice = createSlice({
         handleResetGame: () => initialState,
         updateTimeLeft: setTimeLeft,
         handleLevelUp: setLevelUp,
-
+        handleItemByPair: setItemByPair,
     },
 })
 
 
-export const { handleIsPlaying,handleIsResumeActive, updateTimeLeft,handleResetGame,handleLevelUp } = gameSlice.actions;
+export const { handleIsPlaying,handleIsResumeActive, updateTimeLeft,handleResetGame,handleLevelUp,handleItemByPair } = gameSlice.actions;
 
 export const gameState = (state: { game: IGameStateSlice }) => state.game;
 
