@@ -39,7 +39,6 @@ const setIsResumeActive: CaseReducer<IGameStateSlice, TSetIsActive> = (state, ac
 }
 const setItemByPair: CaseReducer<IGameStateSlice, PayloadAction<{itemByPair: IGameStateSlice["itemByPair"]}>> = (state, action ) => {
     const  {itemByPair}  = action.payload
-    console.log("🚀 ~ file: gameSlice.ts:42 ~ itemByPair:", itemByPair)
     //@ts-ignore
     state.itemByPair = itemByPair
 } 
