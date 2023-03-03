@@ -6,7 +6,8 @@ const initItemsSpriteArray = (level: number) => {
         for (let w = 0; w < 10; w++) {
             let positionX = (-w * 526) / 10;
             let positionY = (-h * 466) / 4;
-            array.push({ positionX, positionY, id: w.toString(), isActive:false });
+            let id =array.length + 1 
+            array.push({ positionX, positionY, id: id.toString(), isActive:false });
         }
     }
     return array

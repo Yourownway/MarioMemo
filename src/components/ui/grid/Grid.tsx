@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiState as uiSlice , handleOpenModal} from "../../../store/slice/uiSlice";
 import { gameState as gameSlice, handleItemByPair, handleLevelUp } from "../../../store/slice/gameSlice";
 import { EAction } from "../modals/type";
+import { useNavigate } from "react-router-dom";
+import { randomizeItem } from "../../../store/utils/grid";
 
 const DynamicGrid = styled.div`
 	margin: 0 auto;
@@ -35,7 +37,8 @@ const Grid: React.FC<IGrid> =({isResumeMenu}) => {
 	const dispatch = useDispatch();
 	const uiState = useSelector(uiSlice);
 	const gameState = useSelector(gameSlice);
-
+	const [levelIsDown, setLevelIsDown] = useState(false)
+    let navigate = useNavigate()
 	const [currentLevel, setCurrentLevel] = useState(1);
 	const handleClick = useCallback(
 		(elem: IItem, ref: React.MutableRefObject<HTMLDivElement>) => {
@@ -81,28 +84,34 @@ const Grid: React.FC<IGrid> =({isResumeMenu}) => {
 
 const levelUp = (level: number) => {
 	if(level >= 4) return
+	setLevelIsDown(true)
     dispatch(handleLevelUp())
 	dispatch(handleOpenModal({isActive:true, modalAction:EAction.LVLUP}))
+
 }
 
 	const generateGrid = (level: number) => {
 		let ratio = (247 / 378) * level * 1.2;
 		const arrayOfItem: any[] = initItemsSpriteArray(level);
-
 		const arrayOfItemByPair = [...arrayOfItem, ...arrayOfItem];
-		setItemByPair(arrayOfItemByPair);
-		dispatch(handleItemByPair({itemByPair: arrayOfItemByPair}))
+		const randomArray = randomizeItem(arrayOfItemByPair)
+		if (randomArray) {
+			console.log("🚀 ~ file: Grid.tsx:99 ~ generateGrid ~ randomArray:", randomArray)
+			setItemByPair(randomArray);
+			dispatch(handleItemByPair({ itemByPair: randomArray }))
+		}
 	};
 	useEffect(() => {
 		if(isResumeMenu && gameState.itemByPair){
-			console.log("🚀 ~ file: Grid.tsx:94 ~ useEffect ~ isResumeMenu:", isResumeMenu)
 			return 	setItemByPair(gameState.itemByPair);
 		}
-		if(gameState.level<= 4){
+		if(gameState.level<= 4 && !uiState.modalState.isActive){
+			setItemByPair([])
 			generateGrid(gameState.level);
+			setLevelIsDown(false)
 		}
 		
-	}, [gameState.level]);
+	}, [gameState.level,uiState.modalState.isActive]);
 
 	const itemConfigStyle = {
 		backgroundImage: `url(${itemListLogo})`,
@@ -118,7 +127,7 @@ const levelUp = (level: number) => {
 				{...{ level: gameState.level }}
 			>
 				{/* @ts-ignore */}
-				{itemByPair && itemByPair.map((elem, i) => (
+				{!levelIsDown && itemByPair && itemByPair.map((elem, i) => (
 						<GridItem 
 							handleClick={handleClick}
 							data={elem}

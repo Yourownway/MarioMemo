@@ -26,14 +26,6 @@ const StartPage: React.FC = () => {
 				<p>memory</p>
 			</div>
 			<div className="menu_container">
-				{/* <p
-            className="selectable"
-            onClick={() => handleOpenModal(true,EAction.USERNAME)}
-        >
-            {" "}
-            <span className="mush_hover"></span> RESUME GAME
-        </p> */}
-
                 {(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0) &&
                     	<Link to="/game/resume" className="selectable">
 						{" "}
@@ -62,7 +54,7 @@ const StartPage: React.FC = () => {
 					</p>
 				)}
 
-				{userState.best.isExists && (
+				{/* {userState.best.isExists && (
 					<p
 						className="selectable"
 						onClick={() =>
@@ -77,7 +69,7 @@ const StartPage: React.FC = () => {
 						{" "}
 						<span className="mush_hover"></span> BEST SCORE
 					</p>
-				)}
+				)} */}
                 
 			</div>
 		</div>

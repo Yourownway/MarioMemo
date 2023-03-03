@@ -1,4 +1,4 @@
-import  React, { useEffect, useRef } from "react";
+import  React, { useEffect, useLayoutEffect, useRef } from "react";
 
 const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
 	const itemRef : React.Ref<HTMLDivElement> = useRef(null);
@@ -9,10 +9,14 @@ const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
 		backgroundPositionY: props.data.positionY,
 	};
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if(props.data.isActive)
 		itemRef.current?.classList.add("active_item");
-	 
+	    else if (
+			itemRef.current?.classList.contains("active_item") && !props.data.isActive
+		){
+			itemRef.current?.classList.remove("active_item")
+		}
 	}, [props.data.isActive])
 	
 	return (

@@ -18,8 +18,13 @@ const Modal: React.FC = (props) => {
 	const dispatch = useDispatch();
 	const { modalAction, isActive } = useSelector(uiSlice).modalState;
 	const gameState = useSelector(gameSlice)
-	// console.log("🚀 ~ file: Modal.tsx:21 ~ gameState:", gameState.isPlaying)
-	// console.log("🚀 ~ file: Modal.tsx:20 ~ isActive:", isActive)
+	const {step} = useSelector(userSlice)
+	useEffect(() => {
+		return () => {
+			if(step === "game")
+			dispatch(handleIsPlaying({ bool: true }))
+		}
+	}, [])
 
 	useLayoutEffect(() => {
 		if (!modalAction) return setRender(<></>);
@@ -47,6 +52,7 @@ const Modal: React.FC = (props) => {
 	 useEffect(() => {
 	 	if (isActive && gameState.isPlaying ) dispatch(handleIsPlaying({ bool: false }));
 	 }, [isActive])
+	
 
 	return (
 		<Wrapper
