@@ -96,7 +96,6 @@ const levelUp = (level: number) => {
 		const arrayOfItemByPair = [...arrayOfItem, ...arrayOfItem];
 		const randomArray = randomizeItem(arrayOfItemByPair)
 		if (randomArray) {
-			console.log("🚀 ~ file: Grid.tsx:99 ~ generateGrid ~ randomArray:", randomArray)
 			setItemByPair(randomArray);
 			dispatch(handleItemByPair({ itemByPair: randomArray }))
 		}

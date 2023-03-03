@@ -26,7 +26,6 @@ export default function UseExit() {
 
 
     useEffect(() => {
-        console.log("render");
         
         window.addEventListener("keydown", (e) => onExit(e, EAction.EXIT));
         return () => {
