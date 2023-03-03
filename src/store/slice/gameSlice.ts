@@ -1,12 +1,12 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IItem } from "../../components/ui/grid/Grid";
 const initialState: IGameStateSlice = {
     isSaved: false,
     level: 4,
     timeSpend: 0,
     initTime: 600,
     timeLeft: 600,
-    itemArray: [],
-    itemLeft: [],
+    itemByPair: [],
     isPlaying: false,
     isResumeActive: false,
 
@@ -17,8 +17,7 @@ interface IGameStateSlice {
     timeSpend: number,
     initTime: number,
     timeLeft: number,
-    itemArray: any[],
-    itemLeft: any[],
+    itemByPair: IItem[],
     isPlaying: boolean
     isResumeActive: boolean,
 

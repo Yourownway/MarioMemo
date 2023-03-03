@@ -22,7 +22,8 @@ function App() {
 				<ScoreTop />
 				<Routes>
 					<Route path="/" element={<StartPage />} />
-					<Route path="/game" element={<GamePage />} />
+					<Route path="/game" element={<GamePage isResumeMenu={false}/>} />
+					<Route path="/game/resume" element={<GamePage isResumeMenu={true} />} />
 				</Routes>
 				<div className="brickBottom" />
 			</div>

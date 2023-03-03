@@ -5,7 +5,7 @@ import { EAction } from "../ui/modals/type";
 import { useDispatch, useSelector } from "react-redux";
 import { userState as userSlice,handleStep} from "../../store/slice/userSlice";
 import { uiState as uiSlice, handleOpenModal } from "../../store/slice/uiSlice";
-import { gameState as gameSlice,handleIsPlaying,handleResetGame} from "../../store/slice/gameSlice";
+import { gameState as gameSlice,handleIsPlaying,handleIsResumeActive,handleResetGame} from "../../store/slice/gameSlice";
 
 const StartPage: React.FC = () => {
     const userState = useSelector(userSlice);
@@ -16,6 +16,7 @@ const StartPage: React.FC = () => {
 	useEffect(() => {
 		dispatch(handleStep({step:"start"}))
 		dispatch(handleIsPlaying({ bool: false }))
+		dispatch(handleIsResumeActive({ bool: false }));
 	}, [])
 
 	return (
@@ -33,8 +34,8 @@ const StartPage: React.FC = () => {
             <span className="mush_hover"></span> RESUME GAME
         </p> */}
 
-                {gameState.isResumeActive &&
-                    	<Link to="/game" className="selectable">
+                {(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0) &&
+                    	<Link to="/game/resume" className="selectable">
 						{" "}
 						<span className="mush_hover"></span> RESUME GAME
 					</Link>

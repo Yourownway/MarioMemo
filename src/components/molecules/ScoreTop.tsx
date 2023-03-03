@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userState as userSlice } from "../../store/slice/userSlice";
-
 import { uiState as uiSlice, handleOpenModal} from "../../store/slice/uiSlice";
 import { gameState as gameSlice } from "../../store/slice/gameSlice";
 import { secondsToMinutesAndSeconds } from "../../store/utils/timer";
@@ -11,6 +10,7 @@ import Timebar from "../ui/timebar/Timebar";
 const ScoreTop: React.FC = () => {
 	const userState = useSelector(userSlice);
 	const gameState = useSelector(gameSlice);
+	const uiState = useSelector(uiSlice);
     const dispatch = useDispatch()
 	const [time, setTime] = useState(gameState.timeLeft)
 
@@ -36,8 +36,8 @@ const ScoreTop: React.FC = () => {
 						})
 					);}}>
             {userState.name}</p>
-			{gameState.isResumeActive || gameState.isPlaying ? (
-				<div>
+			{(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0) || gameState.isPlaying ? (
+				<div className="animate__bounceIn animate__animated">
 					<p>LVL: {gameState.level}</p>
 					<p>TIME: {secondsToMinutesAndSeconds(time)}</p>
 				</div>
@@ -45,7 +45,7 @@ const ScoreTop: React.FC = () => {
 				<div></div>
 			)}
 		</div>
-		{ userState.step === "game" && <Timebar timeLeft={time} decrementTimeLeft={decrementTimeLeft} />}
+		{ userState.step === "game" &&  !uiState.countDownState.isActive && <Timebar timeLeft={time} decrementTimeLeft={decrementTimeLeft} />}
 		</>
 	);
 };

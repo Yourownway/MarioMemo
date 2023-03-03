@@ -3,6 +3,7 @@
     width: auto;
     background: linear-gradient(180deg, #5B8AF1 0%, rgba(91, 138, 241, 0.6) 100%);
     min-width: 800px;
+    height: 100vh;
 }
 
 .startPage_container{
@@ -16,7 +17,7 @@
 .brickBottom {
     background-image: url("../../assets/img/build-box.png");
     background-size: 40px 41.5px;
-   
+    position: absolute;
     bottom: 0;
     height: 10vh;
     width: 100%;

@@ -10,7 +10,7 @@ import {
 } from "../../../store/slice/uiSlice";
 import {gameState as gameSlice,
 	handleIsPlaying,
-	handleIsResumeActive,
+	
 } from "../../../store/slice/gameSlice";
 
 const Modal: React.FC = (props) => {

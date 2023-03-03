@@ -14,7 +14,11 @@ import {
 import UseExit from "../../hooks/event/UseExit";
 import { handleStep } from "../../store/slice/userSlice";
 
-const GamePage: React.FC = () => {
+interface IGamePage {
+	isResumeMenu:boolean;
+}
+
+const GamePage: React.FC<IGamePage> = ({isResumeMenu}) => {
 	const dispatch = useDispatch();
 	const uiState = useSelector(uiSlice);
 	const gameState = useSelector(gameSlice);
@@ -25,7 +29,7 @@ const GamePage: React.FC = () => {
 
 	useEffect(() => {
 		dispatch(handleStep({step:"game"}))
-		if (!gameState.isResumeActive)
+		if (isResumeMenu && !gameState.isResumeActive)
 			dispatch(handleIsResumeActive({ bool: true }));
 	}, [])
 	
@@ -49,14 +53,16 @@ const GamePage: React.FC = () => {
 		}
 	};
 	useLayoutEffect(() => {
+		
 		if (countDown < 1 ) {
 	     //prevent initGrid animation
-		  
-			setTimeout(() => {
-				dispatch(handleIsPlaying({ bool: true }));
+		 setTimeout(() => {
+			 dispatch(handleCountDownIsActive({ isActive: false }));
+			 dispatch(handleIsPlaying({ bool: true }));
 			}, 2000);
 			return
 		}
+		dispatch(handleCountDownIsActive({ isActive: true }));
 		 if (gameState.isPlaying) {
 			dispatch(handleIsPlaying({ bool: false }));
 		}	
@@ -77,7 +83,7 @@ const GamePage: React.FC = () => {
 				</div>
 			) : (
 				<>
-					<Grid />
+					<Grid  isResumeMenu={isResumeMenu}/>
 				</>
 			)}
 		</div>
