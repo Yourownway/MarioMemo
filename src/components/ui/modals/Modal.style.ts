@@ -31,7 +31,8 @@ const Content = styled.div<IModalProps>`
     width: auto;
     height: inherit;
     opacity: 1;
-    height: 550px;
+    
+    min-height: 60vh;
     margin: 21px 30px;
     background: ${(p: IModalProps) => p.modalAction === "success" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
     display: flex;

@@ -13,7 +13,8 @@ import { EAction } from "../modals/type";
 const DynamicGrid = styled.div`
 	margin: 0 auto;
 	width: auto;
-	height: calc(100vh - var(--main-brickBottom-size) - 100px);
+	
+	height: 80vh;
 	display: grid;
 	/* grid-template-columns: repeat( 4, 1fr); */
 	grid-template-columns: ${(p: any) =>

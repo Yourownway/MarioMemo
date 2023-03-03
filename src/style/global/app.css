@@ -104,6 +104,7 @@
 
 .gamePage_container{
     min-height:  calc(100vh - var(--main-brickBottom-size) - 73px);
+    height: 80vh;
 }
 @keyframes initGrid {
     from {  transform: rotateY(180deg) }
@@ -152,7 +153,7 @@
     transform: rotateY(180deg) scale(0.68); */
     margin: -33% auto;
     background-color: rgb(203, 182, 112);
-    transform: rotateY(180deg) scale(0.59);
+    transform: rotateY(180deg) scale(0.57);
   }
 
   .countDown_container{
