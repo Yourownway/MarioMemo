@@ -81,16 +81,17 @@ const Grid: React.FC<IGrid> =({isResumeMenu}) => {
 		[itemByPair,itemToCompare],
 )
 
-const levelUp = (level: number) => {
-	if(level >= 1) 
-	{navigate('/'); 
-	dispatch(handleResetGame())
-	return dispatch(handleOpenModal({isActive:true, modalAction:EAction.GAMEWIN}))}
-	setLevelIsDown(true)
-    dispatch(handleLevelUp())
-	dispatch(handleOpenModal({isActive:true, modalAction:EAction.LVLUP}))
+	const levelUp = (level: number) => {
+		if (level >= 4) {
+			navigate('/');
+			dispatch(handleResetGame())
+			return dispatch(handleOpenModal({ isActive: true, modalAction: EAction.GAMEWIN }))
+		}
+		setLevelIsDown(true)
+		dispatch(handleLevelUp())
+		dispatch(handleOpenModal({ isActive: true, modalAction: EAction.LVLUP }))
 
-}
+	}
 
 	const generateGrid = (level: number) => {
 		let ratio = (247 / 378) * level * 1.2;
