@@ -17,7 +17,6 @@ export default function UseExit() {
         (e: KeyboardEvent, action: EAction) => {
             if (keyIsDown) return
             setKeyIsDown(true)
-            console.log("key press");
             e.preventDefault()
             if (userState.step !== "game" || uiState.countDownState.isActive) return
             if (e.key === "Escape") {

@@ -16,7 +16,6 @@ const StartPage: React.FC = () => {
 	useEffect(() => {
 		dispatch(handleStep({step:"start"}))
 		dispatch(handleIsPlaying({ bool: false }))
-		dispatch(handleIsResumeActive({ bool: false }));
 	}, [])
 
 	return (
@@ -26,7 +25,7 @@ const StartPage: React.FC = () => {
 				<p>memory</p>
 			</div>
 			<div className="menu_container">
-                {(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0) &&
+                {(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0 && gameState.isResumeActive) &&
                     	<Link to="/game/resume" className="selectable">
 						{" "}
 						<span className="mush_hover"></span> RESUME GAME

@@ -5,7 +5,7 @@ import { initItemsSpriteArray } from "../../../utils/game/sprite";
 import GridItem from "./GridItem";
 import { useDispatch, useSelector } from "react-redux";
 import { uiState as uiSlice , handleOpenModal} from "../../../store/slice/uiSlice";
-import { gameState as gameSlice, handleItemByPair, handleLevelUp } from "../../../store/slice/gameSlice";
+import { gameState as gameSlice, handleIsResumeActive, handleItemByPair, handleLevelUp, handleResetGame } from "../../../store/slice/gameSlice";
 import { EAction } from "../modals/type";
 import { useNavigate } from "react-router-dom";
 import { randomizeItem } from "../../../store/utils/grid";
@@ -71,11 +71,10 @@ const Grid: React.FC<IGrid> =({isResumeMenu}) => {
 
 			} else if (itemToCompare.id != elem.id) {
 				// to do displayErrorMessage()
-
 				setTimeout(() => {
 					itemToCompare.ref?.current.classList.remove("active_item");
 					ref.current.classList.remove("active_item");
-				}, 1500);
+				}, 720);
 			}
 			return setItemToCompare(null);
 		},
@@ -83,7 +82,10 @@ const Grid: React.FC<IGrid> =({isResumeMenu}) => {
 )
 
 const levelUp = (level: number) => {
-	if(level >= 4) return
+	if(level >= 1) 
+	{navigate('/'); 
+	dispatch(handleResetGame())
+	return dispatch(handleOpenModal({isActive:true, modalAction:EAction.GAMEWIN}))}
 	setLevelIsDown(true)
     dispatch(handleLevelUp())
 	dispatch(handleOpenModal({isActive:true, modalAction:EAction.LVLUP}))

@@ -41,7 +41,7 @@ const ScoreTop: React.FC = () => {
 						})
 					);}}>
             {userState.name}</p>
-			{(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0) || gameState.isPlaying ? (
+			{(gameState.initTime > gameState.timeLeft && gameState.timeLeft > 0 && gameState.isResumeActive) || gameState.isPlaying ? (
 				<div className="animate__bounceIn animate__animated">
 					<p>LVL: {gameState.level}</p>
 					<p>TIME: {secondsToMinutesAndSeconds(time)}</p>

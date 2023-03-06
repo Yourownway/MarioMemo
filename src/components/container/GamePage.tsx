@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Grid from "../ui/grid/Grid";
-import Timebar from "../ui/timebar/Timebar";
 import "animate.css";
 import { EAction } from "../ui/modals/type";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +25,7 @@ const GamePage: React.FC<IGamePage> = ({isResumeMenu}) => {
     const [countDown, setCountDown] = useState(3);
 	const countRef = useRef(null);
 	let navigate = useNavigate();
+
 
 	useEffect(() => {
 		dispatch(handleStep({step:"game"}))
@@ -59,6 +59,7 @@ const GamePage: React.FC<IGamePage> = ({isResumeMenu}) => {
 		 setTimeout(() => {
 			 dispatch(handleCountDownIsActive({ isActive: false }));
 			 dispatch(handleIsPlaying({ bool: true }));
+			 dispatch(handleIsResumeActive({ bool: true }));
 			}, 2000);
 			return
 		}

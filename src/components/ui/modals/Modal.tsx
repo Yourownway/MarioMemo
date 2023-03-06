@@ -12,6 +12,7 @@ import {gameState as gameSlice,
 	handleIsPlaying,
 	
 } from "../../../store/slice/gameSlice";
+import { secondsToMinutesAndSeconds } from "../../../store/utils/timer";
 
 const Modal: React.FC = (props) => {
 	const [render, setRender] = useState(<></>);
@@ -21,10 +22,13 @@ const Modal: React.FC = (props) => {
 	const {step} = useSelector(userSlice)
 	useEffect(() => {
 		return () => {
-			if(step === "game")
-			dispatch(handleIsPlaying({ bool: true }))
+			if (step === "game")
+				dispatch(handleIsPlaying({ bool: true }))
+			else {
+				dispatch(handleIsPlaying({ bool: false }))
+			}
 		}
-	}, [])
+	}, [step])
 
 	useLayoutEffect(() => {
 		if (!modalAction) return setRender(<></>);
@@ -43,6 +47,12 @@ const Modal: React.FC = (props) => {
 		}
 		if (modalAction === "countDown") {
 			setRender(<ContentCountDown handleIsOpen={handleIsOpen} />);
+		}
+		if (modalAction === "gameWin") {
+			setRender(<ContentGameWin handleIsOpen={handleIsOpen} />);
+		}	
+		if (modalAction === "gameOver") {
+			setRender(<ContentGameOver handleIsOpen={handleIsOpen} />);
 		}
 	}, [modalAction]);
 
@@ -68,7 +78,24 @@ const Modal: React.FC = (props) => {
 		</Wrapper>
 	);
 };
-
+const ContentGameOver = ({ handleIsOpen }: IContent) => {
+	return (
+		<div>
+			<p>GAME OVER !</p>
+		</div>
+	);
+};
+const ContentGameWin = ({ handleIsOpen }: IContent) => {
+	const { initTime, timeLeft, level } = useSelector(gameSlice)
+	const time = initTime - timeLeft;
+	return (
+		<div>
+			<p>GAME FINISH!</p>
+			<p>SCORE:</p>
+			<p>LVL {level} TIME {secondsToMinutesAndSeconds(time)}</p>
+		</div>
+	);
+};
 const ContentNewBest = () => {
 	return (
 		<div>
