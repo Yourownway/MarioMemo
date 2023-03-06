@@ -10,22 +10,28 @@ import GamePage from "./components/container/GamePage";
 import { useSelector } from "react-redux";
 import { uiState as uiSlice, handleOpenModal } from "./store/slice/uiSlice";
 import { useDispatch } from "react-redux";
+import { UseScreenSize } from "./hooks/event/UseScreenSize";
 
 function App() {
 	const dispatch = useDispatch();
 	const { modalState } = useSelector(uiSlice);
-
+	const {screenWidth, screenHeight} = UseScreenSize()
+	console.log("🚀 ~ file: App.tsx:19 ~ App ~ screenWidth:", screenWidth)
 	return (
 		<>
 			<div className="App">
 				{modalState.isActive && <Modal />}
-				<ScoreTop />
-				<Routes>
-					<Route path="/" element={<StartPage />} />
-					<Route path="/game" element={<GamePage isResumeMenu={false}/>} />
-					<Route path="/game/resume" element={<GamePage isResumeMenu={true} />} />
-				</Routes>
-				<div className="brickBottom" />
+				{screenWidth < 1050 ? <h1 className="errorMsg"> Error this web site is not responsive yet</h1> :
+					<>
+						<ScoreTop />
+						<Routes>
+							<Route path="/" element={<StartPage />} />
+							<Route path="/game" element={<GamePage isResumeMenu={false} />} />
+							<Route path="/game/resume" element={<GamePage isResumeMenu={true} />} />
+						</Routes>
+						<div className="brickBottom" />
+					</>
+				}
 			</div>
 		</>
 	);
