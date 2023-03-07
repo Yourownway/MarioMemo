@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store/UseStore";
 import {
 	gameState as gameSlice, updateTimeLeft
 } from "../../../store/slice/gameSlice";
@@ -48,8 +48,8 @@ interface P {
 }
 
 function Timebar({ timeLeft,decrementTimeLeft }: P) {
-	const { isPlaying } = useSelector(gameSlice);
-	const dispatch = useDispatch();
+	const { isPlaying } = useAppSelector(gameSlice);
+	const dispatch = useAppDispatch();
 
 
 	

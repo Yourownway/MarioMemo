@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Border, Wrapper, Content } from "./Modal.style";
 // import { IModalProps } from "./type";
-import { useDispatch, useSelector } from "react-redux";
 import  {userState as userSlice, updateUserName } from "../../../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,13 +13,14 @@ import {gameState as gameSlice,
 } from "../../../store/slice/gameSlice";
 import { secondsToMinutesAndSeconds } from "../../../store/utils/timer";
 import { IModalProps } from "./type";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store/UseStore";
 
 const Modal: React.FC<IModalProps> = (props) => {
 	const [render, setRender] = useState(<></>);
-	const dispatch = useDispatch();
-	const { modalAction, isActive } = useSelector(uiSlice).modalState;
-	const gameState = useSelector(gameSlice)
-	const {step} = useSelector(userSlice)
+	const dispatch = useAppDispatch();
+	const { modalAction, isActive } = useAppSelector(uiSlice).modalState;
+	const gameState = useAppSelector(gameSlice)
+	const {step} = useAppSelector(userSlice)
 	useEffect(() => {
 		return () => {
 			if (step === "game")
@@ -87,7 +87,7 @@ const ContentGameOver = ({ handleIsOpen }: IContent) => {
 	);
 };
 const ContentGameWin = ({ handleIsOpen }: IContent) => {
-	const { initTime, timeLeft, level } = useSelector(gameSlice)
+	const { initTime, timeLeft, level } = useAppSelector(gameSlice)
 	const time = initTime - timeLeft;
 	return (
 		<div>
@@ -132,7 +132,7 @@ const ContentCountDown = ({ handleIsOpen }: IContent) => {
 };
 const ContentExit = ({ handleIsOpen }: IContent) => {
 	const [stay, setStay] = useState(true);
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const handleClick = (bool: boolean) => {
 		if (bool) {
@@ -165,10 +165,10 @@ interface IContent {
 	handleIsOpen: (bool: boolean) => void;
 }
 const ContentName = ({ handleIsOpen }: IContent) => {
-	const {name} = useSelector(userSlice)
+	const {name} = useAppSelector(userSlice)
     const [currentName,setCurrentName] = useState(name)
 
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

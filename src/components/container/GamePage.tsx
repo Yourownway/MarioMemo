@@ -3,8 +3,6 @@ import Grid from "../ui/grid/Grid";
 import "animate.css";
 import { EAction } from "../ui/modals/type";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { uiState as uiSlice, handleOpenModal, handleCountDownIsActive } from "../../store/slice/uiSlice";
 import {
 	gameState as gameSlice,
@@ -12,15 +10,16 @@ import {
 } from "../../store/slice/gameSlice";
 import UseExit from "../../hooks/event/UseExit";
 import { handleStep } from "../../store/slice/userSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/store/UseStore";
 
 interface IGamePage {
 	isResumeMenu:boolean;
 }
 
 const GamePage: React.FC<IGamePage> = ({isResumeMenu}) => {
-	const dispatch = useDispatch();
-	const uiState = useSelector(uiSlice);
-	const gameState = useSelector(gameSlice);
+	const dispatch = useAppDispatch();
+	const uiState = useAppSelector(uiSlice);
+	const gameState = useAppSelector(gameSlice);
 	const exitEvent = UseExit()
     const [countDown, setCountDown] = useState(3);
 	const countRef = useRef(null);

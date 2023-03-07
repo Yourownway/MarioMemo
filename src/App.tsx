@@ -7,14 +7,13 @@ import ScoreTop from "./components/molecules/ScoreTop";
 import { Routes, Route } from "react-router-dom";
 import GamePage from "./components/container/GamePage";
 
-import { useSelector } from "react-redux";
 import { uiState as uiSlice, handleOpenModal } from "./store/slice/uiSlice";
-import { useDispatch } from "react-redux";
 import { UseScreenSize } from "./hooks/event/UseScreenSize";
+import { useAppDispatch, useAppSelector } from "./hooks/store/UseStore";
 
 function App() {
-	const dispatch = useDispatch();
-	const { modalState } = useSelector(uiSlice);
+	const dispatch = useAppDispatch();
+	const { modalState } = useAppSelector(uiSlice);
 	const {screenWidth, screenHeight} = UseScreenSize()
 	console.log("🚀 ~ file: App.tsx:19 ~ App ~ screenWidth:", screenWidth)
 	return (

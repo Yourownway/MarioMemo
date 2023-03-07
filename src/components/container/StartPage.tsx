@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import { EAction } from "../ui/modals/type";
-import { useDispatch, useSelector } from "react-redux";
 import { userState as userSlice,handleStep} from "../../store/slice/userSlice";
 import { uiState as uiSlice, handleOpenModal } from "../../store/slice/uiSlice";
 import { gameState as gameSlice,handleIsPlaying,handleIsResumeActive,handleResetGame} from "../../store/slice/gameSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/store/UseStore";
 
 const StartPage: React.FC = () => {
-    const userState = useSelector(userSlice);
-	const uiState = useSelector(uiSlice);
-    const gameState = useSelector(gameSlice);
-	const dispatch = useDispatch();
+    const userState = useAppSelector(userSlice);
+	const uiState = useAppSelector(uiSlice);
+    const gameState = useAppSelector(gameSlice);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		dispatch(handleStep({step:"start"}))

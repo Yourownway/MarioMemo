@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux"
 import { gameState as gameSlice, handleIsPlaying } from "../../store/slice/gameSlice";
 import { EAction } from "../../components/ui/modals/type";
 import { uiState as uiSlice, handleOpenModal } from "../../store/slice/uiSlice";
 import { userState as userSlice } from '../../store/slice/userSlice';
+import { useAppDispatch, useAppSelector } from '../store/UseStore';
 
 
 export default function UseExit() {
-    const dispatch = useDispatch();
-    const gameState = useSelector(gameSlice);
-    const uiState = useSelector(uiSlice);
-    const userState = useSelector(userSlice);
+    const dispatch = useAppDispatch();
+    const gameState = useAppSelector(gameSlice);
+    const uiState = useAppSelector(uiSlice);
+    const userState = useAppSelector(userSlice);
 
     const [keyIsDown, setKeyIsDown] = useState(false)
     const handleKeyDown =

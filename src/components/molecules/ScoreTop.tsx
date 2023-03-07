@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { userState as userSlice } from "../../store/slice/userSlice";
 import { uiState as uiSlice, handleOpenModal} from "../../store/slice/uiSlice";
 import { gameState as gameSlice, updateTimeLeft } from "../../store/slice/gameSlice";
 import { secondsToMinutesAndSeconds } from "../../store/utils/timer";
 import { EAction } from "../ui/modals/type";
 import Timebar from "../ui/timebar/Timebar";
+import { useAppDispatch, useAppSelector } from "../../hooks/store/UseStore";
 
 const ScoreTop: React.FC = () => {
-	const userState = useSelector(userSlice);
-	const gameState = useSelector(gameSlice);
-	const uiState = useSelector(uiSlice);
-    const dispatch = useDispatch()
+	const userState = useAppSelector(userSlice);
+	const gameState = useAppSelector(gameSlice);
+	const uiState = useAppSelector(uiSlice);
+    const dispatch = useAppDispatch()
 	const [time, setTime] = useState(gameState.timeLeft)
 	
 

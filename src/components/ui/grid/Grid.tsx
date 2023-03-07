@@ -3,12 +3,12 @@ import styled from "styled-components";
 import itemListLogo from "../../../assets/img/marioSprite_526x466.png";
 import { initItemsSpriteArray } from "../../../utils/game/sprite";
 import GridItem from "./GridItem";
-import { useDispatch, useSelector } from "react-redux";
 import { uiState as uiSlice , handleOpenModal} from "../../../store/slice/uiSlice";
 import { gameState as gameSlice, handleIsResumeActive, handleItemByPair, handleLevelUp, handleResetGame } from "../../../store/slice/gameSlice";
 import { EAction } from "../modals/type";
 import { useNavigate } from "react-router-dom";
 import { randomizeItem } from "../../../store/utils/grid";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store/UseStore";
 
 const DynamicGrid = styled.div`
 	margin: 0 auto;
@@ -34,9 +34,9 @@ interface IGrid {
 const Grid: React.FC<IGrid> =({isResumeMenu}) => {
 	const [itemByPair, setItemByPair] = useState<IItem[]>([]);
 	const [itemToCompare, setItemToCompare] = useState<IItem|null>(null);
-	const dispatch = useDispatch();
-	const uiState = useSelector(uiSlice);
-	const gameState = useSelector(gameSlice);
+	const dispatch = useAppDispatch();
+	const uiState = useAppSelector(uiSlice);
+	const gameState = useAppSelector(gameSlice);
 	const [levelIsDown, setLevelIsDown] = useState(false)
     let navigate = useNavigate()
 	const [currentLevel, setCurrentLevel] = useState(1);
