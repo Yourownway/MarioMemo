@@ -1,4 +1,4 @@
-import { IModalProps } from './type';
+import { IModalContentProps, IModalProps } from './type';
 import styled from 'styled-components';
 
 import image from "../../../assets/img/build-box.png"
@@ -26,7 +26,7 @@ const Border = styled.div`
     
 
 `
-const Content = styled.div<IModalProps>`
+const Content = styled.div<IModalContentProps>`
    padding: 5%;
     width: auto;
     height: inherit;
@@ -34,7 +34,7 @@ const Content = styled.div<IModalProps>`
     
     min-height: 60vh;
     margin: 21px 30px;
-    background: ${(p: IModalProps) => p.modalAction === "lvlUp" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
+    background: ${(p: IModalContentProps) => p.modalAction === "lvlUp" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
     display: flex;
     justify-content:center;
     align-items:center;

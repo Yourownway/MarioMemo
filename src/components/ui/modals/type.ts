@@ -1,5 +1,7 @@
 export interface IModalProps { 
-    
+    id? : string
+}
+export interface IModalContentProps {
     readonly modalAction: EAction
 }
 

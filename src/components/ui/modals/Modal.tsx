@@ -13,8 +13,9 @@ import {gameState as gameSlice,
 	
 } from "../../../store/slice/gameSlice";
 import { secondsToMinutesAndSeconds } from "../../../store/utils/timer";
+import { IModalProps } from "./type";
 
-const Modal: React.FC = (props) => {
+const Modal: React.FC<IModalProps> = (props) => {
 	const [render, setRender] = useState(<></>);
 	const dispatch = useDispatch();
 	const { modalAction, isActive } = useSelector(uiSlice).modalState;
