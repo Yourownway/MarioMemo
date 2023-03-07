@@ -66,7 +66,7 @@ const Modal: React.FC<IModalProps> = (props) => {
 	
 
 	return (
-		<Wrapper
+		<Wrapper id={props.id}
 			onClick={() => {
 				if (modalAction === "exit")
 					dispatch(handleIsPlaying({ bool: true }));
