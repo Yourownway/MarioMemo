@@ -15,12 +15,11 @@ function App() {
 	const dispatch = useAppDispatch();
 	const { modalState } = useAppSelector(uiSlice);
 	const {screenWidth, screenHeight} = UseScreenSize()
-	console.log("🚀 ~ file: App.tsx:19 ~ App ~ screenWidth:", screenWidth)
 	return (
 		<>
 			<div className="App">
 				{modalState.isActive && <Modal />}
-				{screenWidth < 1050 ? <h1 className="errorMsg"> Error this web site is not responsive yet</h1> :
+				{screenWidth < 1024 ? <h1 className="errorMsg"> Error this web site is not responsive yet</h1> :
 					<>
 						<ScoreTop />
 						<Routes>

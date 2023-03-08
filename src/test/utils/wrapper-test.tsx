@@ -11,6 +11,7 @@ import uiReducer from '../../store/slice/uiSlice'
 import gameReducer from '../../store/slice/gameSlice'
 
 import mockStore  from "../mock/store-mock"
+import { BrowserRouter } from 'react-router-dom'
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>
@@ -26,13 +27,17 @@ const reducer = combineReducers({
 export function renderWithProviders(
   ui: React.ReactElement,
   {
-    preloadedState = mockStore,
+    preloadedState,
     store = configureStore({ reducer, preloadedState }),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return <Provider store={store}>{children}</Provider>
+    return <Provider store={store}>
+      <BrowserRouter>
+        {children}
+      </BrowserRouter>
+    </Provider>
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }

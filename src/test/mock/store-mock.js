@@ -8,12 +8,12 @@ module.exports = {
             time: 0,
             level: 0
         },
-        step: "start"
+        step: "game"
     },
     "ui": {
         modalState: {
-            isActive: true,
-            modalAction: EAction.exit
+            isActive: false,
+            modalAction: EAction.INIT
         },
         countDownState: {
             isActive: false
