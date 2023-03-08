@@ -13,7 +13,7 @@ const ScoreTop: React.FC = () => {
 	const uiState = useAppSelector(uiSlice);
     const dispatch = useAppDispatch()
 	const [time, setTime] = useState(gameState.timeLeft)
-	console.log("render time");
+
 	
 	useEffect(() => { 
 		if ( gameState.timeLeft !== time )
