@@ -8,6 +8,7 @@ import {
 } from "../../../store/slice/uiSlice";
 import {gameState as gameSlice,
 	handleIsPlaying,
+	handleResetGame,
 	
 } from "../../../store/slice/gameSlice";
 import { secondsToMinutesAndSeconds } from "../../../store/utils/timer";
@@ -15,11 +16,15 @@ import { IModalProps } from "./type";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store/UseStore";
 
 const Modal: React.FC<IModalProps> = (props) => {
-	const [render, setRender] = useState(<></>);
 	const dispatch = useAppDispatch();
 	const { modalAction, isActive } = useAppSelector(uiSlice).modalState;
 	const gameState = useAppSelector(gameSlice)
+	
 	const {step} = useAppSelector(userSlice)
+	const [render, setRender] = useState(<></>);
+
+	let navigate= useNavigate();
+
 	useEffect(() => {
 		return () => {
 			if (step === "game")
@@ -45,9 +50,6 @@ const Modal: React.FC<IModalProps> = (props) => {
 		if (modalAction === "userName") {
 			setRender(<ContentName handleIsOpen={handleIsOpen} />);
 		}
-	/* 	if (modalAction === "countDown") {
-			setRender(<ContentCountDown handleIsOpen={handleIsOpen} />);
-		} */
 		if (modalAction === "gameWin") {
 			setRender(<ContentGameWin handleIsOpen={handleIsOpen} />);
 		}	
@@ -69,7 +71,11 @@ const Modal: React.FC<IModalProps> = (props) => {
 			onClick={() => {
 				if (modalAction === "exit")
 					dispatch(handleIsPlaying({ bool: true }));
-				    handleIsOpen(false);
+				if (modalAction === "gameOver") {
+					navigate("/")
+					dispatch(handleResetGame())
+				}
+				handleIsOpen(false);
 			}}
 		>
 			<Border onClick={(e) => e.stopPropagation()}>
@@ -108,13 +114,11 @@ const ContentLvlUp = () => {
 	return (
 		<div data-testid="modal_lvlUp">
 			<p>LEVEL UP !</p>
-			
 		</div>
 	);
 };
 
 const ContentExit = ({ handleIsOpen }: IContent) => {
-	const [stay, setStay] = useState(true);
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const handleClick = (bool: boolean) => {
