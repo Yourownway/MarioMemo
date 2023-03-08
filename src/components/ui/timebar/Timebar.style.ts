@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { IProgress } from "./type";
 
 export const Container = styled.div`
-	height: 30px;
+    height: 5vh;
+	max-height:30px;
 	width: 60%;
-	min-width: 600px;
+	min-width: 500px;
 	position: absolute;
-	bottom: 18px;
+	bottom: 2.5vh;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0);
