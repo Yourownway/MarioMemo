@@ -18,20 +18,16 @@ display: flex;
   align-items: center;
 `;
 const Border = styled.div`
-    width: 600px;
-    
+    width: 600px;  
     background-image: url(${image});
     background-size: 30px;
     margin: 0 auto 75px auto;
-    
-
-`
+`;
 const Content = styled.div<IModalContentProps>`
    padding: 5%;
     width: auto;
     height: inherit;
-    opacity: 1;
-    
+    opacity: 1;  
     min-height: 60vh;
     margin: 21px 30px;
     background: ${(p: IModalContentProps) => p.modalAction === "lvlUp" ? `center / 100% no-repeat url(${imageSucess}) ` : "black"};
@@ -39,18 +35,15 @@ const Content = styled.div<IModalContentProps>`
     justify-content:center;
     align-items:center;
     & > div {
-        display: flex;
-        
+        display: flex;   
         flex-direction:column;
         align-items: center;
         justify-content:space-around;
         min-height:200px;    
         & > div {
-
             display: flex;
             width:100%;
-            justify-content: space-between;
-          
+            justify-content: space-between;       
             & > p:hover{
                 cursor:pointer;
                & .mush_hover{
@@ -59,12 +52,10 @@ const Content = styled.div<IModalContentProps>`
             }
         }    
         & > p {
-            font-size:58px;
-            
+            font-size:58px;          
         }
-    }
-        
-`
+    }      
+`;
 
 
 export { Wrapper, Border, Content }

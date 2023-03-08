@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { initItemsSpriteArray } from "../../../utils/game/sprite";
 import GridItem from "./GridItem";
 import { uiState as uiSlice, handleOpenModal } from "../../../store/slice/uiSlice";
-import { gameState as gameSlice, handleIsResumeActive, handleItemByPair, handleLevelUp, handleResetGame } from "../../../store/slice/gameSlice";
+import { gameState as gameSlice,  handleItemByPair, handleLevelUp, handleResetGame } from "../../../store/slice/gameSlice";
 import { EAction } from "../modals/type";
 import { useNavigate } from "react-router-dom";
 import { randomizeItem } from "../../../store/utils/grid";

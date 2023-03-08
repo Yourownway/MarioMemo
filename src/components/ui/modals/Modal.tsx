@@ -33,7 +33,7 @@ const Modal: React.FC<IModalProps> = (props) => {
 				dispatch(handleIsPlaying({ bool: false }))
 			}
 		}
-	}, [step])
+	}, [step, isActive])
 
 	useLayoutEffect(() => {
 		if (!modalAction) return setRender(<></>);
