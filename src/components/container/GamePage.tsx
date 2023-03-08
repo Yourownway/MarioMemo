@@ -1,9 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Grid from "../ui/grid/Grid";
 import "animate.css";
-import { EAction } from "../ui/modals/type";
-import { useNavigate } from "react-router-dom";
-import { uiState as uiSlice, handleOpenModal, handleCountDownIsActive } from "../../store/slice/uiSlice";
+import { handleCountDownIsActive } from "../../store/slice/uiSlice";
 import {
 	gameState as gameSlice,
 	handleIsPlaying,handleIsResumeActive
@@ -18,19 +16,18 @@ interface IGamePage {
 
 const GamePage: React.FC<IGamePage> = ({isResumeMenu}) => {
 	const dispatch = useAppDispatch();
-	const uiState = useAppSelector(uiSlice);
 	const gameState = useAppSelector(gameSlice);
+	// eslint-disable-next-line
 	const exitEvent = UseExit()
     const [countDown, setCountDown] = useState(3);
 	const countRef = useRef(null);
-	let navigate = useNavigate();
 
 
 	useEffect(() => {
 		dispatch(handleStep({step:"game"}))
 		if (isResumeMenu && !gameState.isResumeActive)
 			dispatch(handleIsResumeActive({ bool: true }));
-	}, [])
+	}, [isResumeMenu,gameState.isResumeActive,dispatch])
 	
 	//@ts-ignore
 	const displayColorCountDown = (count, ref) => {
@@ -73,7 +70,7 @@ const GamePage: React.FC<IGamePage> = ({isResumeMenu}) => {
 		return () => {
 			clearInterval(timer);
 		};
-	}, [countDown]);
+	}, [countDown,dispatch,gameState.isPlaying]);
 
 	return (
 		<div className="gamePage_container">

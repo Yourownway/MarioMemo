@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { handleIsPlaying } from "../../store/slice/gameSlice";
 import { EAction } from "../../components/ui/modals/type";
 import { uiState as uiSlice, handleOpenModal } from "../../store/slice/uiSlice";
@@ -13,25 +13,32 @@ export default function UseExit() {
 
     const [keyIsDown, setKeyIsDown] = useState(false);
 
-    const handleKeyDown =
+    const handleKeyDown = useCallback(
         (e: KeyboardEvent, action: EAction) => {
             if (keyIsDown) return
             setKeyIsDown(true)
             e.preventDefault()
             if (userState.step !== "game" || uiState.countDownState.isActive) return
             if (e.key === "Escape") {
-                const isActive = uiState.modalState.isActive
+                const { isActive } = uiState.modalState
                 dispatch(handleIsPlaying({ bool: isActive }));
                 dispatch(
                     handleOpenModal({ isActive: !isActive, modalAction: action })
                 );
             }
-        };
+        },
+        [userState.step, uiState.countDownState.isActive, uiState.modalState, dispatch,keyIsDown],
+    )
+    const handleKeyUp = useCallback(
+        (e: KeyboardEvent) => {
+            if (e) setKeyIsDown(false)
+        },
+        [],
+    )
 
-    const handleKeyUp = (e: KeyboardEvent) => {
-        if (e) setKeyIsDown(false)
-    };
-    
+
+
+
     useEffect(() => {
         window.addEventListener("keydown", (e) => handleKeyDown(e, EAction.EXIT));
         return () => {

@@ -13,16 +13,18 @@ const ScoreTop: React.FC = () => {
 	const uiState = useAppSelector(uiSlice);
     const dispatch = useAppDispatch()
 	const [time, setTime] = useState(gameState.timeLeft)
+	console.log("render time");
 	
-
 	useEffect(() => { 
-		if (time != gameState.timeLeft)
-			setTime(gameState.timeLeft)
+		if ( gameState.timeLeft !== time )
+		setTime(gameState.timeLeft)
+		// eslint-disable-next-line
 	}, [gameState.timeLeft])
 
 	useEffect(() => {
-		dispatch(updateTimeLeft({ time }))
-	}, [userState.step])
+		dispatch(updateTimeLeft({ time })) 
+		// eslint-disable-next-line
+	}, [userState.step,dispatch])
 	
 	const decrementTimeLeft = () => {
 		setTime(current => current - 1)

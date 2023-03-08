@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+
 import Modal from "./components/ui/modals/Modal";
 import "./style/index.css";
-import { EAction } from "./components/ui/modals/type";
 import StartPage from "./components/container/StartPage";
 import ScoreTop from "./components/molecules/ScoreTop";
 import { Routes, Route } from "react-router-dom";
 import GamePage from "./components/container/GamePage";
-
-import { uiState as uiSlice, handleOpenModal } from "./store/slice/uiSlice";
+import { uiState as uiSlice } from "./store/slice/uiSlice";
 import { UseScreenSize } from "./hooks/event/UseScreenSize";
-import { useAppDispatch, useAppSelector } from "./hooks/store/UseStore";
+import { useAppSelector } from "./hooks/store/UseStore";
 
 function App() {
-	const dispatch = useAppDispatch();
 	const { modalState } = useAppSelector(uiSlice);
-	const {screenWidth, screenHeight} = UseScreenSize()
+	const {screenWidth} = UseScreenSize()
 	return (
 		<>
 			<div className="App">
