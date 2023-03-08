@@ -12,7 +12,6 @@ GAMEOVER = "gameOver",
 LVLUP = "lvlUp",
 EXIT = "exit",
 USERNAME = "userName",
-COUNTDOWN = "countDown",
 BEST = "best"
 
 }

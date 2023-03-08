@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Border, Wrapper, Content } from "./Modal.style";
-// import { IModalProps } from "./type";
 import  {userState as userSlice, updateUserName } from "../../../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import {
@@ -46,9 +45,9 @@ const Modal: React.FC<IModalProps> = (props) => {
 		if (modalAction === "userName") {
 			setRender(<ContentName handleIsOpen={handleIsOpen} />);
 		}
-		if (modalAction === "countDown") {
+	/* 	if (modalAction === "countDown") {
 			setRender(<ContentCountDown handleIsOpen={handleIsOpen} />);
-		}
+		} */
 		if (modalAction === "gameWin") {
 			setRender(<ContentGameWin handleIsOpen={handleIsOpen} />);
 		}	
@@ -66,7 +65,7 @@ const Modal: React.FC<IModalProps> = (props) => {
 	
 
 	return (
-		<Wrapper id={props.id}
+		<Wrapper id={props.id} data-testid="modal"
 			onClick={() => {
 				if (modalAction === "exit")
 					dispatch(handleIsPlaying({ bool: true }));
@@ -81,7 +80,7 @@ const Modal: React.FC<IModalProps> = (props) => {
 };
 const ContentGameOver = ({ handleIsOpen }: IContent) => {
 	return (
-		<div>
+		<div data-testid="modal_over">
 			<p>GAME OVER !</p>
 		</div>
 	);
@@ -90,7 +89,7 @@ const ContentGameWin = ({ handleIsOpen }: IContent) => {
 	const { initTime, timeLeft, level } = useAppSelector(gameSlice)
 	const time = initTime - timeLeft;
 	return (
-		<div>
+		<div data-testid="modal_win">
 			<p>GAME FINISH!</p>
 			<p>SCORE:</p>
 			<p>LVL {level} TIME {secondsToMinutesAndSeconds(time)}</p>
@@ -99,7 +98,7 @@ const ContentGameWin = ({ handleIsOpen }: IContent) => {
 };
 const ContentNewBest = () => {
 	return (
-		<div>
+		<div data-testid="modal_best">
 			<p>NEW BEST SCORE !</p>
 			<p>LVL 3 TIME 3:24</p>
 		</div>
@@ -107,29 +106,13 @@ const ContentNewBest = () => {
 };
 const ContentLvlUp = () => {
 	return (
-		<div>
+		<div data-testid="modal_lvlUp">
 			<p>LEVEL UP !</p>
 			
 		</div>
 	);
 };
-const ContentCountDown = ({ handleIsOpen }: IContent) => {
-	const [count, setCount] = useState(3);
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setCount((prev) => prev - 1);
-		}, 1000);
-		if (count < 1) {
-			clearInterval(timer);
-			handleIsOpen(false);
-		}
-		return () => {
-			clearInterval(timer);
-		};
-	}, [count]);
 
-	return <div></div>;
-};
 const ContentExit = ({ handleIsOpen }: IContent) => {
 	const [stay, setStay] = useState(true);
 	const dispatch = useAppDispatch();
@@ -145,7 +128,7 @@ const ContentExit = ({ handleIsOpen }: IContent) => {
 		}
 	};
 	return (
-		<div>
+		<div data-testid="modal_exit">
 			<p>EXIT GAME ?</p>
 			<div>
 				<p className="selectable" onClick={() => handleClick(true)}>
@@ -184,7 +167,7 @@ const ContentName = ({ handleIsOpen }: IContent) => {
 		}
 	};
 	return (
-		<div>
+		<div data-testid="modal_name">
 			<p>CHOOSE YOUR NAME</p>
 			<div>
 				<input
