@@ -1,10 +1,19 @@
 import  React, { useEffect, useLayoutEffect, useRef } from "react";
+import itemListLogo from "../../../assets/img/marioSprite_526x466.png";
+import { IItem } from "./type";
 
-const GridItem = (props: { data: any; configStyle: any; handleClick: any }) => {
+const GridItem = (props: { data: IItem;  handleClick: (elem: IItem, ref: React.RefObject<HTMLDivElement>) =>void }) => {
+
+	const configStyle = {
+		backgroundImage: `url(${itemListLogo})`,
+		width: `${526 / 10}px`,
+		height: `${466 / 4}px`,
+	};
+
 	const itemRef : React.Ref<HTMLDivElement> = useRef(null);
 
 	const style = {
-		...props.configStyle,
+		...configStyle,
 		backgroundPositionX: props.data.positionX,
 		backgroundPositionY: props.data.positionY,
 	};

@@ -1,4 +1,4 @@
-import { IItem } from "../../components/ui/grid/Grid";
+import { IItem } from "../../components/ui/grid/type";
 
 const randomizeItem = (array:IItem[]) => {  
     return array.map(value => ({ value, sort: Math.random() }))

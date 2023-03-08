@@ -1,5 +1,5 @@
 import { CaseReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IItem } from "../../components/ui/grid/Grid";
+import { IItem } from "../../components/ui/grid/type";
 const initialState: IGameStateSlice = {
     isSaved: false,
     level: 1,
