@@ -6,76 +6,15 @@
     height: 100vh;
 }
 
-.startPage_container{
-    display: flex;
-    flex-direction: column;
-    /* min-height: calc(100vh - var(--main-brickBottom-size) - var(--main-scoreTop-size) - 20px); */
-    height: 80vh;
-}
-
-
 .brickBottom {
     background-image: url("../../assets/img/build-box.png");
     background-size: 40px 41.5px;
     position: absolute;
     bottom: 0;
-    height: 10vh;
+    height: var(--main-brickBottom-size);
     width: 100%;
 }
-.scoreTop_container{
-    padding: 0 4%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: var(--main-scoreTop-size);
-    height: 10vh;
 
-}
-.scoreTop_container > div{
-    display: flex;
-    justify-content: space-between;
-    width: 550px;
-}
-.logo_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.logo_container img {
-    max-width: 400px;
-    
-}
-
-.logo_container p {
-    font-family: "OleoScript";
-    color: #f5f5f5;
-    font-size: 55px;
-}
-
-.menu_container {
-        position: relative;
-        min-height: 150px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex-grow: 1;
-          
-}
-.menu_container p, .menu_container a {
-    
-    width: 250px;
-    margin: 10px auto;
-    text-align: center;
-    
- 
-}
-
-.menu_container p:hover,.menu_container a:hover{
-    cursor: pointer;
-
-} 
 .selectable{
     position: relative;
 }
@@ -91,90 +30,10 @@
     top: 4px;
 }
 
-
-
 .selectable:hover .mush_hover{
     opacity: 1;
  
 }
-
-
-
-
-/* game page */
-
-.gamePage_container{
-    min-height:  calc(100vh - var(--main-brickBottom-size) - 73px);
-    height: 80vh;
-}
-@keyframes initGrid {
-    from {  transform: rotateY(180deg) }
-    to   {  transform: rotateY(180deg) }
-  }
-
-.active_item{
-    transform: rotateY(180deg);
-}
-.flip-item-container {
-    animation: 1.5s linear  initGrid;
-    position: relative;
-    width: 70px;
-    height:70px;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    background-color: rgb(147, 187, 236);
-    margin:auto;
-    display: flex;
-    justify-content: center;
-  }
-.flip-item-front, .flip-item-back {
-    position: absolute;
-    /* width: (526px / 10); */
-    width: 100%;
-    /* height: (466px / 4); */
-    height:100%;
-    /* width: `${563/4}px`,
-		height: `${466/5}px` */
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  .flip-item-front {
-    background-color: #bbb;
-    color: black;
-    background-image: url("../../assets/img/grid-box.png");
-    background-size: cover;
-}
-  
-  .flip-item-back {
-    /* for lvl 1 and 2 with width 80px */
-    /* margin: -23% auto;
-    transform: rotateY(180deg) scale(0.68); */
-    margin: -33% auto;
-    background-color: rgb(203, 182, 112);
-    transform: rotateY(180deg) scale(0.57);
-  }
-
-  .countDown_container{
-    background-color: rgba(255, 255, 255, 0.4);
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    top:0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-  }
-
-  .countDown_container > h1{
-    font-family: SuperMario;
-    font-size: 9rem;
-    color: blue;   
-    -webkit-text-stroke: 3px black;
-  }
-
   .pointer{
     cursor: pointer;
   }

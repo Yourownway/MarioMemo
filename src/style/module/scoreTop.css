@@ -1,0 +1,13 @@
+.scoreTop_container{
+    padding: 0 4%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--main-scoreTop-size);
+
+}
+.scoreTop_container > div{
+    display: flex;
+    justify-content: space-between;
+    width: 550px;
+}

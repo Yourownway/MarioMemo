@@ -19,11 +19,13 @@
       url("./fonts/SuperMario256.ttf") format("truetype");
   }
 :root{
-    --main-scoreTop-size: 48px;
+    --main-scoreTop-size: 10vh;
     --main-brickBottom-size: 75px;
 }
 
     
     @import url(./global//reset.css);
     @import url(./global/app.css);
-    
+    @import url(./module/startPage.css);
+    @import url(./module/scoreTop.css);
+    @import url(./module/gamePage.css);
